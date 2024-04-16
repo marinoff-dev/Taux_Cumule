@@ -1,6 +1,7 @@
 const TarifsList = () => {
   return (
-    <div>TarifsList</div>
+    <div>TarifsListhu</div>
+
   )
 }
 
