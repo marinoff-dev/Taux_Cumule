@@ -3,7 +3,8 @@ import {
   } from "react-router-dom";
 
 import App from "./App";
-import { tarifRoutes } from "./pages/routes/routes";
+import { tarifRoutes } from "./pages/Tarif/routes/routes";
+import { tarifCalcul } from "./pages/Calcul/routes/routes";
 
 export const router = createBrowserRouter([
     {
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
       errorElement: <h1>Custom Error Page !!! </h1>,
 	    children: [
 		    tarifRoutes,
+        tarifCalcul,
 	  ]
     },
   ]);

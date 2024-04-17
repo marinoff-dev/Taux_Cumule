@@ -22,7 +22,7 @@ const menus: NavProps[] = [
 		icon: Calculator,
 	}, 
 	{
-		id: 'tarif',
+		id: 'tarifs',
 		name: 'Liste des tarifs',
 		to: "/tarifs",
 		icon: ClipboardList,
