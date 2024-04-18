@@ -1,15 +1,20 @@
 import { RouteObject } from "react-router-dom";
-import { Tarif } from "..";
-import { TarifsList } from "@/features/tarifs/components/";
+import { Tarifsw } from "..";
+import { TarifswList } from "@/features/tarifs/components/";
 
 
 export const tarifRoutes: RouteObject = {
     path: "tarifs",
-    element: <Tarif />,
+    element: <Tarifsw />,
     children: [
         {
             path: "",
-            element: <TarifsList />
+            element: <TarifswList />
+        },      
+        {/*{
+            path: "",
+            element: <ModifTarif />
         },
+    */}
     ]
 }

@@ -12,7 +12,7 @@ const menus: NavProps[] = [
 	{
 		id: 'dashboard',
 		name: 'Tableau de bord',
-		to: "/dashboard",
+		to: "/home",
 		icon: LayoutDashboard,
 	},
 	{

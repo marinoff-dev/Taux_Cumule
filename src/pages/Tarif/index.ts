@@ -1,1 +1,1 @@
-export { default as Tarif } from './Tarif'
+export { default as Tarifsw } from './Tarifsw'

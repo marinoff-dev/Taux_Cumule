@@ -3,7 +3,7 @@ import { RouteObject } from "react-router-dom";
 
   
 import CalculTaux from "../CalculTaux";
-import { TarifForm } from "@/features/tarifs/components";
+import { TarifswForm } from "@/features/tarifs/components";
 
 
 export const tarifCalcul: RouteObject = {
@@ -12,7 +12,7 @@ export const tarifCalcul: RouteObject = {
     children: [
         {
             path: "",
-            element: <TarifForm />
+            element: <TarifswForm />
         },
     ]
 }

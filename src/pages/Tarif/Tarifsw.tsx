@@ -1,7 +1,7 @@
 import { PageTitle } from "@/components/shared"
 import { Outlet } from "react-router-dom"
 
-const Tarif = () => {
+const Tarifsw = () => {
   return (
     <div>
       <PageTitle>Liste des Tarifs</PageTitle>
@@ -10,4 +10,4 @@ const Tarif = () => {
   )
 }
 
-export default Tarif
+export default Tarifsw

@@ -1,0 +1,1 @@
+export { tarifswSchema } from "./tarifsw.schema"
