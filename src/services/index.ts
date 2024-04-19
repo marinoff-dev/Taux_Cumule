@@ -1,6 +1,7 @@
 import { TARIFSW_URL } from "@/utils/_constants";
 import { getAccessToken } from "@/utils/_helpers";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { isNaN } from "lodash";
 
 export const tarifswApi = createApi({
   reducerPath: "api/tarifs",
@@ -34,11 +35,12 @@ export const tarifswApi = createApi({
     }),
 
     getTarifswByNomenclature: build.query<Tarifsw, number>({
-      query: (nomenclature: number) => `/${nomenclature}`,
+      query: (nomenclature: number) => `tariflibelle/${nomenclature}`, // Utiliser le chemin d'URL correct
       providesTags: (result, error) => {
         return error ? [] : [{ type: "tarifsw", nomenclature: result?.nomenclature }];
       },
     }),
+
 
     createTarifsw: build.mutation({
       query: (tarifsw: Tarifsw) => ({

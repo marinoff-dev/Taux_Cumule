@@ -14,14 +14,30 @@ import {
 	TableRow,
 } from "@/components/ui/table"
 import { taux } from "@/utils/_constants"
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import TarifSearch from "./TarifSearch";
+import { useGetTarifswByNomenclatureQuery } from "@/services";
+
+import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
+
+
 
 export function TarifswForm() {
 	const [nomenclature, setNomenclature] = useState<string>('');
     const [libelle, setLibelle] = useState<string>('');
     const [tarif, setTarifs] = useState<Tarifsw[]>([]); // Utilisez le type Tarifsw
 
-    
+
+	const [tarifswData, setTarifswData] = useState<any>(null);
+	
+     
+	useEffect(() => {
+		if (tarifswData) {
+		  setTarifs(tarifswData);
+		}
+	  }, [tarifswData]);
+
+ 
+
 
 	function handlennomenclature(event: React.ChangeEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -38,24 +54,17 @@ export function TarifswForm() {
 
     return (
 		<>
+
+			<div>
+				<TarifSearch/>
+			</div>
+
+
+
 			<div className="flex justify-center items-center h-full py-6">
 				<Card className="w-full md:w-[90%] lg:w-[75%]">
 					<CardContent>
-						<form>
-							<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-								<div className="flex flex-col space-y-2">
-									<Label htmlFor="nomenclature">Nomenclature</Label>
-									<Input id="nomenclature" placeholder="Entrez la nomenclature" value={tarif} onChange={handlennomenclature} />
-								</div>
-								<div className="flex flex-col space-y-2">
-									<Label htmlFor="libelle">Libellé</Label>
-									<Input id="libelle" className="bg-gray-200" value={libelle} disabled />
-								</div>
-								<div className="flex flex-col space-y-2">
-									<Button className="mt-4 w-full" type="submit">Rechercher</Button>
-								</div>
-							</div>
-						</form>
+						 
 						<form>
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
 								<div className="flex flex-col space-y-2">
