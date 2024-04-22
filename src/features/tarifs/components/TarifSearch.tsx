@@ -10,6 +10,7 @@ function TarifSearch() {
   const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
   //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
 
+  
   useEffect(() => {
     if (libelleData) {
       console.log("Libellé récupéré :", libelleData);
