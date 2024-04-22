@@ -8,11 +8,11 @@ type Tarifsw = {
     rs: number;
     rau: number;
     tst: number;
-    dd_sw: number;
+    dd: number;
     tva: number;
     ddsh2022: number;
     codeUnite: number;
-    etc: number;
+    ect: number;
     da: number;
     caf: number;
     ttv: number;
