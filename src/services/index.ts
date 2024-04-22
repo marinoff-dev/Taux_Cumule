@@ -1,10 +1,20 @@
+import { Tarifsw } from "@/pages/Tarif";
 import { TARIFSW_URL } from "@/utils/_constants";
 import { getAccessToken } from "@/utils/_helpers";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { isNaN } from "lodash";
 
+
+ 
+
+type TarifswLibelle = {
+  libelle: string;
+  nomenclature: number;
+  // Autres propriétés...
+};
+
 export const tarifswApi = createApi({
-  reducerPath: "api/tarifs",
+  reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: TARIFSW_URL,
     prepareHeaders: (headers) => {
@@ -34,9 +44,24 @@ export const tarifswApi = createApi({
       },
     }),
 
-    getTarifswByNomenclature: build.query<Tarifsw, number>({
-      query: (nomenclature: number) => `tariflibelle/${nomenclature}`, // Utiliser le chemin d'URL correct
+   
+
+    getTarifswByNomenclature: build.query<TarifswLibelle, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tariflibelle/${nomenclature}`
+          
+      },
       providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le result est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
         return error ? [] : [{ type: "tarifsw", nomenclature: result?.nomenclature }];
       },
     }),

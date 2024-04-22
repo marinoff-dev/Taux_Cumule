@@ -1,108 +1,68 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useGetTarifswByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
-
-type Tarifsw = {
-  id?: string;
-  nomenclature: number;
-  libelle: string;
-  pc: number;
-  ps: number;
-  pcs: number;
-  rs: number;
-  rau: number;
-  tst: number;
-  dd_sw: number;
-  tva: number;
-  ddsh2022: number;
-  codeUnite: number;
-  etc: number;
-  da: number;
-  caf: number;
-  ttv: number;
-  tfs: number;
-  tsr: number;
-};
+import { error } from "console";
 
 function TarifSearch() {
-    const [value, setValue] = useState<number | undefined>(undefined);
-    
-    
-  const [selectedLibelle, setSelectedLibelle] = useState("");
+  const [value, setValue] = useState<number | undefined>(undefined);
+  const [userInput, setUserInput] = useState<string>("");
+  const [libelle, setLibelle] = useState<string>("");
+  const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
+  //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
+
+  useEffect(() => {
+    if (libelleData) {
+      console.log("Libellé récupéré :", libelleData);
+      setLibelle(libelleData.libelle);
+    }
+    else{
+      console.log("Libellé récupéré :", libelleData);
+    }
+  }, [libelleData]);
 
 
-  const [inputValue, setInputValue] = useState(""); 
 
-  const { data: tarifswData, isLoading } = useGetTarifswByNomenclatureQuery(
-    value !== undefined ? value : 0
-  );
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputValue = event.target.value.trim();
-    const parsedValue = parseInt(inputValue, 10);
-  
-    if (!isNaN(parsedValue)) {
-      setValue(parsedValue);
-    } else {
-      setValue(undefined); // Utiliser undefined au lieu de null
-    }
-    setInputValue(inputValue);
+    setUserInput(event.target.value.trim());
+     
   }
 
-        function handleLibelleClick(libelle: string) {
-            setSelectedLibelle(libelle);
-            setInputValue(libelle); // Mettre à jour l'état inputValue
-          }
+  async function handleButtonClick() {
+    //const parsedValue = parseInt(userInput, 10);
+    console.log("le userinput est :", userInput)
+    console.log("le userinput est :", typeof userInput)
+
+    setValue(+userInput);
+
+    //const libelle = await fetch("http://localhost:8080/api/tariflibelle/"+userInput).then(res=>res.json()).catch(error=>console.log("lerreru est ", error.message))
+
+   // console.log("le libelle est : ", libelle);
+    
+
+   /* if (isNaN(+userInput)) {
+
+       setValue(+userInput);
+    } else {
+      setValue(undefined);
+    }*/
+
+    
+  }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Chargement en cours...</div>;
   }
-
-  console.log("tarifswData:", tarifswData);
-  console.log("value:", value);
-
 
 
    
-  
+
   return (
     <div className="searchBar">
-      <div className="inputSearch">
-        <input
-          type="text"
-          value={value}
-          onChange={handleInputChange}
-          placeholder="Rechercher"
-        />
-        <button onClick={() => console.log(value)}>
-          <span className="material-symbols-outlined">search</span>
-        </button>
-      </div>
-            <ul>
-                    {Array.isArray(tarifswData) &&
-                        value &&
-                        tarifswData
-                    .filter((element: Tarifsw) =>
-                    element.libelle.toLowerCase().includes(value.toString().toLowerCase())
-                    )
-                    .map((element: Tarifsw, index: number) => (
-                    <li onClick={() => handleLibelleClick(element.libelle)} key={index}>
-                        {element.libelle}
-                    </li>
-                    ))}
-      </ul>
-
-      {selectedLibelle && (
-        <div>
-          <label htmlFor="libelle">Libelle</label>
-          <input
-                type="text"
-                value={inputValue} // Utiliser inputValue au lieu de value
-                onChange={handleInputChange}
-                placeholder="Rechercher"
-/>
-        </div>
-      )}
+      <input type="text" className="searchInput" value={userInput} onChange={handleInputChange} />
+      <button onClick={handleButtonClick}>Rechercher</button>
+      
+      <div>Libellé: {libelleData?.libelle || 'N/A'}</div> 
     </div>
   );
 }
