@@ -71,7 +71,7 @@ function TarifSearch() {
 
     setValue(+userInput);
 
-    //const libelle = await fetch("http://localhost:8080/api/tariflibelle/"+userInput).then(res=>res.json()).catch(error=>console.log("lerreru est ", error.message))
+    const libelle = await fetch("http://localhost:8080/api/tariflibelle/"+userInput).then(res=>res.json()).catch(error=>console.log("lerreru est ", error.message))
 
    // console.log("le libelle est : ", libelle);
     
@@ -126,7 +126,7 @@ function TarifSearch() {
       <div>/</div>
       <Button  onClick={handleButtonClick}>Rechercher</Button>
       
-      <div>Libellé: {libelleData?.libelle || 'N/A'}</div> 
+      <div>Libellé: {libelle || 'N/A'}</div> 
 
       <div className="flex flex-col space-y-2">
 									<Button onClick={handleButtonClicktaux}  className="mt-4 w-full" >Calculer le taux</Button>
