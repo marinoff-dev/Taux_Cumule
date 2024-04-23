@@ -2,97 +2,56 @@ import { Tarifsw } from "@/pages/Tarif";
 import { TARIFSW_URL } from "@/utils/_constants";
 import { getAccessToken } from "@/utils/_helpers";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { isNaN } from "lodash";
-
-
- 
-
-type TarifswLibelle = {
-  libelle: string;
-  nomenclature: number;
-  // Autres propriétés...
-};
 
 export const tarifswApi = createApi({
-  reducerPath: "api",
+  reducerPath: "api/tarifs",
   baseQuery: fetchBaseQuery({
     baseUrl: TARIFSW_URL,
     prepareHeaders: (headers) => {
-      const access_token = getAccessToken()
-      if(access_token) {
+      const access_token = getAccessToken();
+      if (access_token) {
         headers.set("Authorization", `Bearer ${access_token}`);
       }
-      return headers
+      return headers;
     }
   }),
   tagTypes: ["tarifsw"],
-
   endpoints: (build) => ({
+    getTarifswByNomenclature: build.query<Tarifsw[], number>({
+      query: (nomenclature: number) => `tarifsw/${nomenclature}`,
+      providesTags: ["tarifsw"],
+    }),
+
     getTarifsw: build.query<Tarifsw[], void>({
       query: () => "",
-      providesTags: (result, error) => {
-        return error ? [] : ["tarifsw"];
-      },
+      providesTags: ["tarifsw"], // Changé de "tarif" à "tarifsw"
       transformResponse: (response: Tarifsw[]) =>
-        response.sort((a: Tarifsw, b: Tarifsw) => a.libelle.localeCompare(b.libelle)),
+          response.sort((a: Tarifsw, b: Tarifsw) => a.libelle.localeCompare(b.libelle)),
     }),
 
-    getTarifswById: build.query<Tarifsw, string>({
-      query: (id: string) => `/${id}`,
-      providesTags: (result, error) => {
-        return error ? [] : [{ type: "tarifsw", id: result?.id }];
-      },
-    }),
-
-   
-
-    getTarifswByNomenclature: build.query<TarifswLibelle, number>({
-      
-      query: (nomenclature: number) =>{
-        console.log("la nomenclature est :", nomenclature)
-        return `tariflibelle/${nomenclature}`
-          
-      },
-      providesTags: (result, error) => {
-      console.log(error)
-      console.log("Le result est :")
-
-      console.log(result)
-
-       
-
-       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
-        return error ? [] : [{ type: "tarifsw", nomenclature: result?.nomenclature }];
-      },
-    }),
-
-
-    createTarifsw: build.mutation({
-      query: (tarifsw: Tarifsw) => ({
-        url: "",
+    createTarifsw: build.mutation<Tarifsw, Partial<Tarifsw>>({
+      query: (tarifsw) => ({
+        url: `tarifsw`,
         method: "POST",
         body: tarifsw,
       }),
       invalidatesTags: ["tarifsw"],
-      transformResponse: (response: { data: Tarifsw }) => response.data,
     }),
-
-    updateAdherent: build.mutation<Tarifsw, Tarifsw>({
-      query: (tarifsw: Tarifsw) => ({
-        url: `/${tarifsw.id}`,
+    
+    updateAdherent: build.mutation<Tarifsw, Partial<Tarifsw>>({
+      query: (tarifsw) => ({
+        url: `tarifsw/${tarifsw.id}`,
         method: "PUT",
         body: tarifsw,
       }),
-      invalidatesTags: (result, error) => {
-        return error ? [] : [{ type: "tarifsw", id: result?.id }, "tarifsw"];
-      },
+      invalidatesTags: ["tarifsw"],
     }),
   }),
 });
 
 export const {
   useGetTarifswQuery,
-  useCreateTarifswMutation,
-  useGetTarifswByIdQuery,
   useGetTarifswByNomenclatureQuery,
+  useCreateTarifswMutation,
+  useUpdateAdherentMutation,
 } = tarifswApi;

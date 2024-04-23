@@ -8,7 +8,7 @@ export const invoices = [
 		rs: "",
 		rau: "",
 		tst: "",
-		dd: "",
+		dd_sw: "",
 		tva: "",
 		da: "",
 		caf: "",
@@ -16,7 +16,7 @@ export const invoices = [
 		ttv: "",
 		tfs: "",
 		tsr: "",
-		ddsh2022: "",
+		ddSh2022: "",
 	 
 	},
 	
@@ -27,7 +27,7 @@ export const invoices = [
   ];
  
 
-export const API_URL = import.meta.env.VITE_API_URL || "/api";
+export const API_URL = import.meta.env.VITE_API_URL || "/api/tarifs";
 export const TARIFSW_URL = `${API_URL}/`;
 
 export const TARIFSW_ACTIONS = {
