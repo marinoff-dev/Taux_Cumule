@@ -13,6 +13,12 @@ type TarifswLibelle = {
   // Autres propriétés...
 };
 
+type TarifswTaux = {
+  taux: number;
+  nomenclature: number;
+  // Autres propriétés...
+};
+
 export const tarifswApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -66,6 +72,26 @@ export const tarifswApi = createApi({
       },
     }),
 
+    getTauxByNomenclature: build.query<TarifswTaux, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tarif/taux/${nomenclature}`
+          
+      },
+      providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le result du taux est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
+        return error ? [] : [{ type: "tarifsw", nomenclature: result?.nomenclature }];
+      },
+    }),
+
 
     createTarifsw: build.mutation({
       query: (tarifsw: Tarifsw) => ({
@@ -95,4 +121,5 @@ export const {
   useCreateTarifswMutation,
   useGetTarifswByIdQuery,
   useGetTarifswByNomenclatureQuery,
+  useGetTauxByNomenclatureQuery,
 } = tarifswApi;
