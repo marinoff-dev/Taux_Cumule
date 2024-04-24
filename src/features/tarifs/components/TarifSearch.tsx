@@ -190,37 +190,72 @@ function TarifSearch() {
         </CardContent>
         <Table className="w-full">
           <TableHeader>
-            <TableRow>
+            <TableRow className="grid grid-cols-3 items-center">
               <TableHead className="w-[100px]">Droit Taxe</TableHead>
               <TableHead>Taux Cumule</TableHead>
               <TableHead>Montant droit de taxe</TableHead>
-              <TableHead className="text-right">Valeur</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-            <TableCell className="flex-col"> {/* Ajoutez la classe "flex-col" */}
-              <div className="font-medium">PC</div>
-              <div>pcs</div>
-              <h3  className="text-red-500 font-bold">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
+            <TableCell className="flex-col">
 
-              <div>rc</div>
-              <h3  className="text-red-500 font-bold">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">PC</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+            </div>
+                
 
-              <div>rau</div>
-              <h3  className="text-red-500 font-bold">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">PCS</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
+            </div>
 
-              <div>RS</div>
-              <h3  className="text-red-500 font-bold">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">RC</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+            </div>
+            
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">RAU</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
+            </div>
 
-              <div>DD</div>
-              <div>DA</div>
-              <h3  className="text-red-500 font-bold">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
-              <div>AIB</div>
-              <h3  className="text-red-500 font-bold">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
-              <div>TVA</div> 
-              <h3  className="text-red-500 font-bold">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
-              <div>&nbsp;</div>
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">RS</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+            </div>
+            
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">DD</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+            </div>
+              
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">DA</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
+            </div>
+
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">AIB</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
+            </div>
+
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">TVA</div>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
+                <h3 className="text-red-500 font-bold flex-grow:">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
+            </div>
+
+            <div>&nbsp;</div>
               <div className="text-right">&nbsp;</div>
            </TableCell>
                   </TableRow>
