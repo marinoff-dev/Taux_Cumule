@@ -1,109 +1,253 @@
-import React, { useState } from "react";
-import { useGetTarifswByNomenclatureQuery } from "@/services/index";
+import React, { useState , useEffect } from "react";
+import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
+import { error } from "console";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { taux } from "@/utils/_constants"
 
-type Tarifsw = {
-  id?: string;
-  nomenclature: number;
-  libelle: string;
-  pc: number;
-  ps: number;
-  pcs: number;
-  rs: number;
-  rau: number;
-  tst: number;
-  dd_sw: number;
-  tva: number;
-  ddsh2022: number;
-  codeUnite: number;
-  etc: number;
-  da: number;
-  caf: number;
-  ttv: number;
-  tfs: number;
-  tsr: number;
-};
-
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+  
+} from "@/components/ui/table"
+import { Card, CardContent } from "@/components/ui/card";
+import { TableColumnsSplit } from "lucide-react";
 function TarifSearch() {
-    const [value, setValue] = useState<number | undefined>(undefined);
-    
-    
-  const [selectedLibelle, setSelectedLibelle] = useState("");
+  const [value, setValue] = useState<number | undefined>(undefined);
+  const [userInput, setUserInput] = useState<string>("");
+  const [taux, setTaux] = useState<number>(0);
+  const [tauxda, setTauxda] = useState<number>(0);
+  const [tauxtva, setTauxtva] = useState<number>(0);
+  const [tauxrs, setTauxrs] = useState<number>(0);
+  const [tauxps, setTauxps] = useState<number>(0);
+  const [tauxpcs, setTauxpcs] = useState<number>(0);
+  const [tauxrau, setTauxrau] = useState<number>(0);
+  const [tauxpc, setTauxpc] = useState<number>(0);
 
 
-  const [inputValue, setInputValue] = useState(""); 
 
-  const { data: tarifswData, isLoading } = useGetTarifswByNomenclatureQuery(
-    value !== undefined ? value : 0
-  );
+
+
+
+  const [tauxaib, setTauxaib] = useState<number>(0);
+
+
+  //recupere le montant demander a calutuler
+  const [simulateValue, setSimulateValue] = useState<number | undefined>(undefined);
+  const [calculatedValue, setCalculatedValue] = useState<number | undefined>(undefined);
+
+
+  const [libelle, setLibelle] = useState<string>("");
+  const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
+
+  const { data: tauxData , isError} = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
+
+  //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
+
+
+  useEffect(() => {
+    if (libelleData) {
+      console.log("Libellé récupéré :", libelleData);
+      setLibelle(libelleData.libelle);
+    }
+    else{
+      console.log("Libellé récupéré :", libelleData);
+    }
+  }, [libelleData]);
+
+
+  useEffect(() => {
+    if (tauxData) {
+      console.log("le taux récupéré sdcdcg:", tauxData);
+      setTauxda(tauxData.tauxda);
+      setTaux(tauxData.taux);
+      setTauxaib(tauxData.tauxaib)
+      setTauxtva(tauxData.tauxtva)
+      setTauxrs(tauxData.tauxrs)
+      setTauxps(tauxData.tauxps)
+      setTauxpc(tauxData.tauxpc)
+      setTauxpcs(tauxData.tauxpcs)
+      setTauxrau(tauxData.tauxrau)
+
+
+
+    }
+    else{
+      console.log("le taux récupéré hvdcsh:", tauxData);
+    }
+  }, [tauxData]);
+
+ if(isLoading){
+  return <div>chargement...</div>
+ }
+
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputValue = event.target.value.trim();
-    const parsedValue = parseInt(inputValue, 10);
-  
-    if (!isNaN(parsedValue)) {
-      setValue(parsedValue);
+    setUserInput(event.target.value.trim());
+      
+  }
+
+  async function handleButtonClick() {
+    //const parsedValue = parseInt(userInput, 10);
+    console.log("le userinput est :", userInput)
+    console.log("le userinput est :", typeof userInput)
+
+    setValue(+userInput);
+
+    const libelle = await fetch("http://localhost:8080/api/tariflibelle/"+userInput).then(res=>res.json()).catch(error=>console.log("lerreru est ", error.message))
+
+   // console.log("le libelle est : ", libelle);
+    
+
+   /* if (isNaN(+userInput)) {
+
+       setValue(+userInput);
     } else {
-      setValue(undefined); // Utiliser undefined au lieu de null
+      setValue(undefined);
+    }*/
+
+    
+  }
+
+  async function handleButtonClicktaux() {
+    try {
+      const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
+      console.log("le taux taux taux est : ", taux);
+      setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
+    } catch (error) {
+      console.log("Une erreur s'est produite lors de la récupération du taux :", error);
     }
-    setInputValue(inputValue);
+    
   }
 
-        function handleLibelleClick(libelle: string) {
-            setSelectedLibelle(libelle);
-            setInputValue(libelle); // Mettre à jour l'état inputValue
-          }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+  //metre a jour la valeur entrer dans le input pour calculer le montabt 
+  function handleInputSimulateChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setSimulateValue(parseFloat(event.target.value.trim()));
   }
 
-  console.log("tarifswData:", tarifswData);
-  console.log("value:", value);
 
+  function handleSimulateSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const calculatedValue = simulateValue !== undefined ? simulateValue * taux : undefined;
+    setCalculatedValue(calculatedValue);
+    // Faites quelque chose avec la valeur calculée, par exemple l'afficher dans la console
+    console.log("Valeur calculée :", calculatedValue);
+  }
 
 
    
-  
-  return (
-    <div className="searchBar">
-      <div className="inputSearch">
-        <input
-          type="text"
-          value={value}
-          onChange={handleInputChange}
-          placeholder="Rechercher"
-        />
-        <button onClick={() => console.log(value)}>
-          <span className="material-symbols-outlined">search</span>
-        </button>
-      </div>
-            <ul>
-                    {Array.isArray(tarifswData) &&
-                        value &&
-                        tarifswData
-                    .filter((element: Tarifsw) =>
-                    element.libelle.toLowerCase().includes(value.toString().toLowerCase())
-                    )
-                    .map((element: Tarifsw, index: number) => (
-                    <li onClick={() => handleLibelleClick(element.libelle)} key={index}>
-                        {element.libelle}
-                    </li>
-                    ))}
-      </ul>
 
-      {selectedLibelle && (
-        <div>
-          <label htmlFor="libelle">Libelle</label>
-          <input
-                type="text"
-                value={inputValue} // Utiliser inputValue au lieu de value
-                onChange={handleInputChange}
-                placeholder="Rechercher"
-/>
+  return (
+
+									
+							
+    <div className="flex justify-center items-center h-full py-6">
+      <Card className="w-full md:w-[90%] lg:w-[75%]">
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+            <div className="flex flex-col space-y-2">
+              <Label htmlFor="nomenclature">Nomenclature</Label>
+              <Input type="text" value={userInput} onChange={handleInputChange} placeholder="Entrez la nomenclature" />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Button className="mt-4 w-full" onClick={handleButtonClick}>Rechercher</Button>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Label htmlFor="libelle">Libellé</Label>
+              <h3 className="text-red-500 font-bold">{libelleData?.libelle || 'N/A'}</h3>
+            </div>
+            
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+            <div className="flex flex-col space-y-2">
+              <Button className="mt-4 w-full" onClick={handleButtonClicktaux}>Calculer le taux</Button>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Label htmlFor="tauxCumule">Taux cumulé</Label>
+              <h3 className="text-red-500 font-bold">{taux !== undefined ? taux : 'N/A'}</h3>
+            </div>
+          </div>
+          <form onSubmit={handleSimulateSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="simulateValue">Simuler une valeur</Label>
+                <Input id="simulateValue" placeholder="Entrez une valeur" value={simulateValue || ''} onChange={handleInputSimulateChange} />
+              </div>
+              <div className="flex flex-col space-y-2">
+                <Button className="mt-4 w-full" type="submit">Calculer la valeur</Button>
+              </div>
+              <div className="flex flex-col space-y-2">
+                &nbsp;
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <Table className="w-full">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Droit Taxe</TableHead>
+              <TableHead>Taux Cumule</TableHead>
+              <TableHead>Montant droit de taxe</TableHead>
+              <TableHead className="text-right">Valeur</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+            <TableCell className="flex-col"> {/* Ajoutez la classe "flex-col" */}
+              <div className="font-medium">PC</div>
+              <div>pcs</div>
+              <h3  className="text-red-500 font-bold">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
+
+              <div>rc</div>
+              <h3  className="text-red-500 font-bold">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+
+              <div>rau</div>
+              <h3  className="text-red-500 font-bold">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
+
+              <div>RS</div>
+              <h3  className="text-red-500 font-bold">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+
+              <div>DD</div>
+              <div>DA</div>
+              <h3  className="text-red-500 font-bold">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
+              <div>AIB</div>
+              <h3  className="text-red-500 font-bold">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
+              <div>TVA</div> 
+              <h3  className="text-red-500 font-bold">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
+              <div>&nbsp;</div>
+              <div className="text-right">&nbsp;</div>
+           </TableCell>
+                  </TableRow>
+            
+          </TableBody>
+          
+        </Table>
+
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
+          <div className="flex flex-col space-y-2">
+            &nbsp;
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="totalTaux">Montant</Label>
+            <h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : ''}</h3>
+          </div>
+          <div className="flex flex-col space-y-2">
+            &nbsp;
+          </div>
         </div>
-      )}
+      </Card>
     </div>
+
+    
+
+    
   );
 }
 

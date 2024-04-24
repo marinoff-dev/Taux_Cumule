@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom"
 const CalculTaux = () => {
   return (
     <div>
-      <PageTitle>Calcul de taux</PageTitle>
+      <PageTitle>Calcul du taux</PageTitle>
       <Outlet/>
     </div>
   )

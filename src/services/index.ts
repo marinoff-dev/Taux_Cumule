@@ -1,10 +1,38 @@
+import { Tarifsw } from "@/pages/Tarif";
 import { TARIFSW_URL } from "@/utils/_constants";
 import { getAccessToken } from "@/utils/_helpers";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { isNaN } from "lodash";
 
+
+ 
+
+type TarifswLibelle = {
+  libelle: string;
+  nomenclature: number;
+  // Autres propriétés...
+};
+
+type TarifswTaux = {
+
+  taux: number;
+  nomenclature: number;
+  tauxtva: number; 
+  tauxda: number;
+  tauxaib:number;
+  tauxrs:number;
+  tauxpc:number;
+  tauxps:number;
+  tauxpcs:number;
+  tauxrau:number;
+  tauxetc:number;
+
+
+  // Autres propriétés...
+};
+
 export const tarifswApi = createApi({
-  reducerPath: "api/tarifs",
+  reducerPath: "api/",
   baseQuery: fetchBaseQuery({
     baseUrl: TARIFSW_URL,
     prepareHeaders: (headers) => {
@@ -15,7 +43,7 @@ export const tarifswApi = createApi({
       return headers
     }
   }),
-  tagTypes: ["tarifsw"],
+  tagTypes: ["tarifsw","tarifswtaux"],
 
   endpoints: (build) => ({
     getTarifsw: build.query<Tarifsw[], void>({
@@ -34,10 +62,45 @@ export const tarifswApi = createApi({
       },
     }),
 
-    getTarifswByNomenclature: build.query<Tarifsw, number>({
-      query: (nomenclature: number) => `tariflibelle/${nomenclature}`, // Utiliser le chemin d'URL correct
+   
+
+    getTarifswByNomenclature: build.query<TarifswLibelle, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tariflibelle/${nomenclature}`
+          
+      },
       providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le libelle recu est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
         return error ? [] : [{ type: "tarifsw", nomenclature: result?.nomenclature }];
+      },
+    }),
+
+    getTauxByNomenclature: build.query<TarifswTaux, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tarif/taux/${nomenclature}`
+          
+      },
+      providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le result du taux est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
+        return error ? [] : [{ type: "tarifswtaux", nomenclature: result?.nomenclature }];
       },
     }),
 
@@ -70,4 +133,5 @@ export const {
   useCreateTarifswMutation,
   useGetTarifswByIdQuery,
   useGetTarifswByNomenclatureQuery,
+  useGetTauxByNomenclatureQuery,
 } = tarifswApi;
