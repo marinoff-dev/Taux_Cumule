@@ -14,11 +14,29 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
+  
 } from "@/components/ui/table"
+import { Card, CardContent } from "@/components/ui/card";
+import { TableColumnsSplit } from "lucide-react";
 function TarifSearch() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
   const [taux, setTaux] = useState<number>(0);
+  const [tauxda, setTauxda] = useState<number>(0);
+  const [tauxtva, setTauxtva] = useState<number>(0);
+  const [tauxrs, setTauxrs] = useState<number>(0);
+  const [tauxps, setTauxps] = useState<number>(0);
+  const [tauxpcs, setTauxpcs] = useState<number>(0);
+  const [tauxrau, setTauxrau] = useState<number>(0);
+  const [tauxpc, setTauxpc] = useState<number>(0);
+
+
+
+
+
+
+  const [tauxaib, setTauxaib] = useState<number>(0);
+
 
   //recupere le montant demander a calutuler
   const [simulateValue, setSimulateValue] = useState<number | undefined>(undefined);
@@ -47,7 +65,18 @@ function TarifSearch() {
   useEffect(() => {
     if (tauxData) {
       console.log("le taux récupéré sdcdcg:", tauxData);
+      setTauxda(tauxData.tauxda);
       setTaux(tauxData.taux);
+      setTauxaib(tauxData.tauxaib)
+      setTauxtva(tauxData.tauxtva)
+      setTauxrs(tauxData.tauxrs)
+      setTauxps(tauxData.tauxps)
+      setTauxpc(tauxData.tauxpc)
+      setTauxpcs(tauxData.tauxpcs)
+      setTauxrau(tauxData.tauxrau)
+
+
+
     }
     else{
       console.log("le taux récupéré hvdcsh:", tauxData);
@@ -118,72 +147,102 @@ function TarifSearch() {
 
 									
 							
-    <div className="searchBar">
-          
-
-      <Input   type="text" className="searchInput" value={userInput} onChange={handleInputChange} placeholder="Entrez la nomenclature" space-y-2 />
-
-      <div>/</div>
-      <Button  onClick={handleButtonClick}>Rechercher</Button>
-      
-      <div>Libellé: {libelle || 'N/A'}</div> 
-
-      <div className="flex flex-col space-y-2">
-									<Button onClick={handleButtonClicktaux}  className="mt-4 w-full" >Calculer le taux</Button>
-			</div>
-      <div>/</div>
-
-								<div className="flex flex-col space-y-2">
-									<Label htmlFor="tauxCumule">Taux cumulé</Label>
-									<div>Taux: {taux !== undefined ? taux : 'N/A'}</div>
-			 </div>
-
-
-              <form onSubmit={handleSimulateSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-                    <div className="flex flex-col space-y-2">
-                      <Label htmlFor="simulateValue">Simuler une valeur</Label>
-                      <Input id="simulateValue" placeholder="Entrez une valeur" value={simulateValue || ''} onChange={handleInputSimulateChange} />
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      <Button className="mt-4 w-full" type="submit">Calculer la valeur</Button>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      &nbsp;
-                    </div>
-                  </div>
-             </form>
-      
-            <Table className="w-full">
-						<TableHeader>
-							<TableRow>
-								<TableHead className="w-[100px]">Libellé</TableHead>
-								<TableHead>&nbsp;</TableHead>
-								<TableHead>&nbsp;</TableHead>
-								<TableHead className="text-right">Valeur</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							
-						</TableBody>
-					</Table>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
-						<div className="flex flex-col space-y-2">
-							&nbsp;
-						</div>
-						<div className="flex flex-col space-y-2">
-                  <Label htmlFor="totalTaux">Montant</Label>
-                  <Input id="totalTaux" className="bg-gray-200" disabled value={calculatedValue !== undefined ? calculatedValue.toString() : ''} />
+    <div className="flex justify-center items-center h-full py-6">
+      <Card className="w-full md:w-[90%] lg:w-[75%]">
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+            <div className="flex flex-col space-y-2">
+              <Label htmlFor="nomenclature">Nomenclature</Label>
+              <Input type="text" value={userInput} onChange={handleInputChange} placeholder="Entrez la nomenclature" />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Button className="mt-4 w-full" onClick={handleButtonClick}>Rechercher</Button>
+            </div>
+            <div className="flex flex-col space-y-3">
+              <Label htmlFor="libelle">Libellé</Label>
+              <h3 className="text-red-500 font-bold">{libelleData?.libelle || 'N/A'}</h3>
+            </div>
+            
           </div>
-						<div className="flex flex-col space-y-2">
-							&nbsp;
-						</div>
-					</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+            <div className="flex flex-col space-y-2">
+              <Button className="mt-4 w-full" onClick={handleButtonClicktaux}>Calculer le taux</Button>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Label htmlFor="tauxCumule">Taux cumulé</Label>
+              <h3 className="text-red-500 font-bold">{taux !== undefined ? taux : 'N/A'}</h3>
+            </div>
+          </div>
+          <form onSubmit={handleSimulateSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="simulateValue">Simuler une valeur</Label>
+                <Input id="simulateValue" placeholder="Entrez une valeur" value={simulateValue || ''} onChange={handleInputSimulateChange} />
+              </div>
+              <div className="flex flex-col space-y-2">
+                <Button className="mt-4 w-full" type="submit">Calculer la valeur</Button>
+              </div>
+              <div className="flex flex-col space-y-2">
+                &nbsp;
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <Table className="w-full">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Droit Taxe</TableHead>
+              <TableHead>Taux Cumule</TableHead>
+              <TableHead>Montant droit de taxe</TableHead>
+              <TableHead className="text-right">Valeur</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+            <TableCell className="flex-col"> {/* Ajoutez la classe "flex-col" */}
+              <div className="font-medium">PC</div>
+              <div>pcs</div>
+              <h3  className="text-red-500 font-bold">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
 
+              <div>rc</div>
+              <h3  className="text-red-500 font-bold">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
 
+              <div>rau</div>
+              <h3  className="text-red-500 font-bold">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
 
+              <div>RS</div>
+              <h3  className="text-red-500 font-bold">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
 
+              <div>DD</div>
+              <div>DA</div>
+              <h3  className="text-red-500 font-bold">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
+              <div>AIB</div>
+              <h3  className="text-red-500 font-bold">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
+              <div>TVA</div> 
+              <h3  className="text-red-500 font-bold">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
+              <div>&nbsp;</div>
+              <div className="text-right">&nbsp;</div>
+           </TableCell>
+                  </TableRow>
+            
+          </TableBody>
+          
+        </Table>
+
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
+          <div className="flex flex-col space-y-2">
+            &nbsp;
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="totalTaux">Montant</Label>
+            <h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : ''}</h3>
+          </div>
+          <div className="flex flex-col space-y-2">
+            &nbsp;
+          </div>
+        </div>
+      </Card>
     </div>
 
     
