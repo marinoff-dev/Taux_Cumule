@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,16 +9,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { invoices } from "@/utils/_constants"; 
 import { useGetTarifswQuery } from "@/services";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const TarifswList = () => {
-  const { isLoading, error, data: tarifs } = useGetTarifswQuery();
+    const { isLoading, error, data: tarifs } = useGetTarifswQuery();
+    const itemsPerPage = 25; // Nombre d'éléments à afficher par page
+    const [page, setPage] = useState(1);
+  
+    if (isLoading) return <p>En cours de chargement ....</p>;
+    if (error)
+      return (
+        <p className="text-red-800 font-semibold text-2xl">Erreur ...</p>
+      );
+  
+    // Si tarifs est undefined, on retourne une valeur par défaut
+    const tarifsArray = tarifs ?? [];
+  
+    /// Calcul de l'index de début et de fin pour afficher les éléments de la page actuelle
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
 
-  if (isLoading) return <p>En cours de chargement ....</p>;
-  if (error)
-    return (
-      <p className="text-red-800 font-semibold text-2xl">Erreur ...</p>
+    // Récupération des éléments de la page actuelle
+    const tarifsPage = tarifsArray.slice(startIndex, endIndex);
+
+  
+    // Calcul du nombre total de pages
+    const totalPages = Math.ceil(tarifsArray.length / itemsPerPage);
+  
+    // Création d'un tableau contenant les numéros de page à afficher
+    const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+  
+    // Filtrage des numéros de page à afficher en fonction de la page actuelle et du nombre total de pages
+    const visiblePageNumbers = pageNumbers.filter(
+      (number) => number === 1 || number === page || number === totalPages || (number >= page - 2 && number <= page + 2)
     );
 
   return (
@@ -47,7 +71,7 @@ const TarifswList = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {tarifs && tarifs.map((tarif, index) => (
+          {tarifsPage && tarifsPage.map((tarif, index) => (
             <TableRow key={index}>
               <TableCell className="font-medium">{tarif.nomenclature}</TableCell>
 					<TableCell>{tarif.libelle}</TableCell>
@@ -66,15 +90,52 @@ const TarifswList = () => {
 					<TableCell>{tarif.tfs}</TableCell>
 					<TableCell>{tarif.ddSh2022}</TableCell>
               <TableCell className="text-right">
-                <Link to={`/modifier/${tarif.id}`}>
+                {/*<Link to={}>*/}
                   <Button className="btn btn-info btn-round">Modifier</Button>
-                </Link>
+                {/*</Link>*/}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+    
+      {/* Pagination */}
+      <Pagination className="py-5">
+        <PaginationContent>
+        <PaginationItem>
+            <PaginationPrevious
+                href="#"
+                onClick={() => setPage(Math.max(page - 1, 1))}
+                className={page === 1 ? "opacity-50 cursor-not-allowed" : ""}
+            >
+                Précédent
+            </PaginationPrevious>
+        </PaginationItem>
+          {visiblePageNumbers.map((number) => (
+            <PaginationItem key={number}>
+              <PaginationLink
+                href="#"
+                isActive={page === number}
+                onClick={() => setPage(number)}
+              >
+                {number}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+        <PaginationItem>
+            <PaginationNext
+                href="#"
+                onClick={() => setPage(Math.min(page + 1, totalPages))}
+                className={page === totalPages ? "opacity-50 cursor-not-allowed" : ""}
+            >
+                Suivant
+            </PaginationNext>
+        </PaginationItem>
+
+        </PaginationContent>
+      </Pagination>
     </div>
+    
   );
 };
 
