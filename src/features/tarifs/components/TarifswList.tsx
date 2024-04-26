@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { invoices } from "@/utils/_constants"; 
+ 
 import { useGetTarifswQuery } from "@/services";
 
 const TarifswList = () => {
