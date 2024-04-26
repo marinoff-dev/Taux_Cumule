@@ -214,9 +214,9 @@ function TarifSearch() {
             </div>
 
             <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">RC</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <div className="mr-20">RS</div>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
             </div>
             
             <div className="grid grid-cols-3 items-center">
