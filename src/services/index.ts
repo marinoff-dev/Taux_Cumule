@@ -25,7 +25,8 @@ type TarifswTaux = {
   tauxps:number;
   tauxpcs:number;
   tauxrau:number;
-  tauxetc:number;
+  tauxect:number;
+  tauxdd:number;
 
 
   // Autres propriétés...
