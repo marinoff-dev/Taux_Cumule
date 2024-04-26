@@ -29,18 +29,28 @@ function TarifSearch() {
   const [tauxpcs, setTauxpcs] = useState<number>(0);
   const [tauxrau, setTauxrau] = useState<number>(0);
   const [tauxpc, setTauxpc] = useState<number>(0);
-
-
-
-
-
-
+  const [tauxdd, setTauxdd] = useState<number>(0);
+  const [tauxect, setTauxect] = useState<number>(0);
   const [tauxaib, setTauxaib] = useState<number>(0);
 
-
-  //recupere le montant demander a calutuler
+ //recupere le montant demander a calutuler et des taux
   const [simulateValue, setSimulateValue] = useState<number | undefined>(undefined);
   const [calculatedValue, setCalculatedValue] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxrs, setCalculatedValuetauxrs] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxps, setCalculatedValuetauxps] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxpc, setCalculatedValuetauxpc] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxrau, setCalculatedValuetauxrau] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxdd, setCalculatedValuetauxdd] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxect, setCalculatedValuetauxect] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxaib, setCalculatedValuetauxaib] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxtva, setCalculatedValuetauxtva] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxda, setCalculatedValuetauxda] = useState<number | undefined>(undefined);
+  const [calculatedValuetauxpcs, setCalculatedValuetauxpcs] = useState<number | undefined>(undefined);
+
+
+
+
+
 
 
   const [libelle, setLibelle] = useState<string>("");
@@ -74,6 +84,10 @@ function TarifSearch() {
       setTauxpc(tauxData.tauxpc)
       setTauxpcs(tauxData.tauxpcs)
       setTauxrau(tauxData.tauxrau)
+      setTauxect(tauxData.tauxect)
+      setTauxdd(tauxData.tauxdd)
+
+
 
 
 
@@ -135,7 +149,30 @@ function TarifSearch() {
   function handleSimulateSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const calculatedValue = simulateValue !== undefined ? simulateValue * taux : undefined;
+    const calculatedValuetauxrs = simulateValue !== undefined ? simulateValue * tauxrs : undefined;
+    const calculatedValuetauxps = simulateValue !== undefined ? simulateValue * tauxps : undefined;
+    const calculatedValuetauxpc = simulateValue !== undefined ? simulateValue * tauxpc : undefined;
+    const calculatedValuetauxpcs = simulateValue !== undefined ? simulateValue * tauxpcs : undefined;
+    const calculatedValuetauxrau = simulateValue !== undefined ? simulateValue * tauxrau : undefined;
+    const calculatedValuetauxect = simulateValue !== undefined ? simulateValue * tauxect : undefined;
+    const calculatedValuetauxdd = simulateValue !== undefined ? simulateValue * tauxdd : undefined;
+    const calculatedValuetauxda = simulateValue !== undefined ? simulateValue * tauxda : undefined;
+    const calculatedValuetauxaib = simulateValue !== undefined ? simulateValue * tauxaib : undefined;
+    const calculatedValuetauxtva = simulateValue !== undefined ? simulateValue * tauxtva : undefined;
     setCalculatedValue(calculatedValue);
+    setCalculatedValuetauxrs(calculatedValuetauxrs);
+    setCalculatedValuetauxpc(calculatedValuetauxpc);
+    setCalculatedValuetauxps(calculatedValuetauxps);
+    setCalculatedValuetauxpcs(calculatedValuetauxpcs);
+    setCalculatedValuetauxrau(calculatedValuetauxrau);
+    setCalculatedValuetauxect(calculatedValuetauxect);
+    setCalculatedValuetauxdd(calculatedValuetauxdd);
+    setCalculatedValuetauxda(calculatedValuetauxda);
+    setCalculatedValuetauxaib(calculatedValuetauxaib);
+    setCalculatedValuetauxtva(calculatedValuetauxtva);
+
+
+
     // Faites quelque chose avec la valeur calculée, par exemple l'afficher dans la console
     console.log("Valeur calculée :", calculatedValue);
   }
@@ -203,56 +240,61 @@ function TarifSearch() {
             <div className="grid grid-cols-3 items-center">
                 <div className="mr-20">PC</div>
                 <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxpc !== undefined ? calculatedValuetauxpc : 'N/A'}</h3>
             </div>
                 
 
             <div className="grid grid-cols-3 items-center">
                 <div className="mr-20">PCS</div>
                 <h3 className="text-blue-400 font-bold flex-grow:">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxpcs !== undefined ? calculatedValuetauxpcs : 'N/A'}</h3>
             </div>
 
             <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">RS</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+                <div className="mr-20">RC</div>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
             </div>
             
             <div className="grid grid-cols-3 items-center">
                 <div className="mr-20">RAU</div>
                 <h3 className="text-blue-400 font-bold flex-grow:">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxrau !== undefined ? calculatedValuetauxrau : 'N/A'}</h3>
             </div>
 
             <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">RS</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+                <div className="mr-20">PS</div>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxps !== undefined ? tauxps : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxps !== undefined ? calculatedValuetauxps : 'N/A'}</h3>
+            </div>
+            <div className="grid grid-cols-3 items-center">
+                <div className="mr-20">ECT</div>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxect !== undefined ? tauxect : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxect !== undefined ? calculatedValuetauxect : 'N/A'}</h3>
             </div>
             
             <div className="grid grid-cols-3 items-center">
                 <div className="mr-20">DD</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxdd !== undefined ? tauxdd : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxdd !== undefined ? calculatedValuetauxdd : 'N/A'}</h3>
             </div>
               
             <div className="grid grid-cols-3 items-center">
                 <div className="mr-20">DA</div>
                 <h3 className="text-blue-400 font-bold flex-grow:">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxda !== undefined ? calculatedValuetauxda : 'N/A'}</h3>
             </div>
 
             <div className="grid grid-cols-3 items-center">
                 <div className="mr-20">AIB</div>
                 <h3 className="text-blue-400 font-bold flex-grow:">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxaib !== undefined ? calculatedValuetauxaib : 'N/A'}</h3>
             </div>
 
             <div className="grid grid-cols-3 items-center">
                 <div className="mr-20">TVA</div>
                 <h3 className="text-blue-400 font-bold flex-grow:">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxtva !== undefined ? calculatedValuetauxtva : 'N/A'}</h3>
             </div>
 
             <div>&nbsp;</div>
