@@ -14,7 +14,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 
 const TarifswList = () => {
     const { isLoading, error, data: tarifs } = useGetTarifswQuery();
-    const itemsPerPage = 25; // Nombre d'éléments à afficher par page
+    const itemsPerPage = 10; // Nombre d'éléments à afficher par page
     const [page, setPage] = useState(1);
   
     if (isLoading) return <p>En cours de chargement ....</p>;
@@ -100,7 +100,7 @@ const TarifswList = () => {
       </Table>
     
       {/* Pagination */}
-      <Pagination className="py-5">
+      <Pagination className="py-4">
         <PaginationContent>
         <PaginationItem>
             <PaginationPrevious
