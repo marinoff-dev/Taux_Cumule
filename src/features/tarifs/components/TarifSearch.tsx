@@ -148,17 +148,17 @@ function TarifSearch() {
 
   function handleSimulateSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const calculatedValue = simulateValue !== undefined ? simulateValue * taux : undefined;
-    const calculatedValuetauxrs = simulateValue !== undefined ? simulateValue * tauxrs : undefined;
-    const calculatedValuetauxps = simulateValue !== undefined ? simulateValue * tauxps : undefined;
-    const calculatedValuetauxpc = simulateValue !== undefined ? simulateValue * tauxpc : undefined;
-    const calculatedValuetauxpcs = simulateValue !== undefined ? simulateValue * tauxpcs : undefined;
-    const calculatedValuetauxrau = simulateValue !== undefined ? simulateValue * tauxrau : undefined;
-    const calculatedValuetauxect = simulateValue !== undefined ? simulateValue * tauxect : undefined;
-    const calculatedValuetauxdd = simulateValue !== undefined ? simulateValue * tauxdd : undefined;
-    const calculatedValuetauxda = simulateValue !== undefined ? simulateValue * tauxda : undefined;
-    const calculatedValuetauxaib = simulateValue !== undefined ? simulateValue * tauxaib : undefined;
-    const calculatedValuetauxtva = simulateValue !== undefined ? simulateValue * tauxtva : undefined;
+    const calculatedValue = simulateValue !== undefined ? Number(((simulateValue * taux)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxrs = simulateValue !== undefined ? Number(((simulateValue * tauxrs)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxps = simulateValue !== undefined ? Number(((simulateValue * tauxps)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxpc = simulateValue !== undefined ? Number(((simulateValue * tauxpc)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxpcs = simulateValue !== undefined ? Number(((simulateValue * tauxpcs)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxrau = simulateValue !== undefined ? Number(((simulateValue * tauxrau)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxect = simulateValue !== undefined ? Number(((simulateValue * tauxect)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxdd = simulateValue !== undefined ? Number(((simulateValue * tauxdd)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxda = simulateValue !== undefined ? Number(((simulateValue * tauxda)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxaib = simulateValue !== undefined ? Number(((simulateValue * tauxaib)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxtva = simulateValue !== undefined ? Number(((simulateValue * tauxtva)/100).toFixed(2)) : undefined;
     setCalculatedValue(calculatedValue);
     setCalculatedValuetauxrs(calculatedValuetauxrs);
     setCalculatedValuetauxpc(calculatedValuetauxpc);
@@ -170,13 +170,20 @@ function TarifSearch() {
     setCalculatedValuetauxda(calculatedValuetauxda);
     setCalculatedValuetauxaib(calculatedValuetauxaib);
     setCalculatedValuetauxtva(calculatedValuetauxtva);
-
-
-
-    // Faites quelque chose avec la valeur calculée, par exemple l'afficher dans la console
-    console.log("Valeur calculée :", calculatedValue);
+  
+    // Faites quelque chose avec les valeurs calculées, par exemple les afficher dans la console
+    console.log("Valeur calculée taux :", calculatedValue);
+    console.log("Valeur calculée tauxrs :", calculatedValuetauxrs);
+    console.log("Valeur calculée tauxps :", calculatedValuetauxps);
+    console.log("Valeur calculée tauxpc :", calculatedValuetauxpc);
+    console.log("Valeur calculée tauxpcs :", calculatedValuetauxpcs);
+    console.log("Valeur calculée tauxrau :", calculatedValuetauxrau);
+    console.log("Valeur calculée tauxect :", calculatedValuetauxect);
+    console.log("Valeur calculée tauxdd :", calculatedValuetauxdd);
+    console.log("Valeur calculée tauxda :", calculatedValuetauxda);
+    console.log("Valeur calculée tauxaib :", calculatedValuetauxaib);
+    console.log("Valeur calculée tauxtva :", calculatedValuetauxtva);
   }
-
 
    
 
@@ -207,7 +214,7 @@ function TarifSearch() {
             </div>
             <div className="flex flex-col space-y-2">
               <Label htmlFor="tauxCumule">Taux cumulé</Label>
-              <h3 className="text-red-500 font-bold">{taux !== undefined ? taux : 'N/A'}</h3>
+              <h3 className="text-red-500 font-bold">{taux.toFixed(2) !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
             </div>
           </div>
           <form onSubmit={handleSimulateSubmit}>
