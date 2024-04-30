@@ -1,16 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { useGetTarifswQuery } from "@/services";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Pencil } from "lucide-react";
 
 const TarifswList = () => {
     const { isLoading, error, data: tarifs } = useGetTarifswQuery();
@@ -32,7 +24,6 @@ const TarifswList = () => {
 
     // Récupération des éléments de la page actuelle
     const tarifsPage = tarifsArray.slice(startIndex, endIndex);
-
   
     // Calcul du nombre total de pages
     const totalPages = Math.ceil(tarifsArray.length / itemsPerPage);
@@ -45,98 +36,97 @@ const TarifswList = () => {
       (number) => number === 1 || number === page || number === totalPages || (number >= page - 2 && number <= page + 2)
     );
 
-  return (
-    <div style={{ overflowX: "auto" }}>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Nomenclature</TableHead>
-            <TableHead>Libellé</TableHead>
-			<TableHead>pc</TableHead>
-			<TableHead>pcs</TableHead>
-			<TableHead>ps</TableHead>
-			<TableHead>rs</TableHead>
-			<TableHead>rau</TableHead>
-			<TableHead>tst</TableHead>
-			<TableHead>dd</TableHead>
-			<TableHead>tva</TableHead>
-			<TableHead>da</TableHead>
-			<TableHead>caf</TableHead>
-			<TableHead>ect</TableHead>  
-			<TableHead>ttv</TableHead>
-			<TableHead>tfs</TableHead>
-			<TableHead>ddsh2022</TableHead>
-            {/* Ajoutez les autres en-têtes de colonnes ici */}
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tarifsPage && tarifsPage.map((tarif, index) => (
-            <TableRow key={index}>
-              <TableCell className="font-medium">{tarif.nomenclature}</TableCell>
-					<TableCell>{tarif.libelle}</TableCell>
-					<TableCell>{tarif.pc}</TableCell>
-					<TableCell>{tarif.pcs}</TableCell>
-					<TableCell>{tarif.ps}</TableCell>
-					<TableCell>{tarif.rs}</TableCell>
-					<TableCell>{tarif.rau}</TableCell>
-					<TableCell>{tarif.tst}</TableCell>
-					<TableCell>{tarif.dd_sw}</TableCell>
-					<TableCell>{tarif.tva}</TableCell>
-					<TableCell>{tarif.da}</TableCell>
-					<TableCell>{tarif.caf}</TableCell>
-					<TableCell>{tarif.ect}</TableCell>  
-					<TableCell>{tarif.ttv}</TableCell>
-					<TableCell>{tarif.tfs}</TableCell>
-					<TableCell>{tarif.ddSh2022}</TableCell>
-              <TableCell className="text-right">
-                {/*<Link to={}>*/}
-                  <Button className="btn btn-info btn-round">Modifier</Button>
-                {/*</Link>*/}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    
-      {/* Pagination */}
-      <Pagination className="py-4">
-        <PaginationContent>
-        <PaginationItem>
-            <PaginationPrevious
-                href="#"
-                onClick={() => setPage(Math.max(page - 1, 1))}
-                className={page === 1 ? "opacity-50 cursor-not-allowed" : ""}
-            >
-                Précédent
-            </PaginationPrevious>
-        </PaginationItem>
-          {visiblePageNumbers.map((number) => (
-            <PaginationItem key={number}>
-              <PaginationLink
-                href="#"
-                isActive={page === number}
-                onClick={() => setPage(number)}
-              >
-                {number}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-        <PaginationItem>
-            <PaginationNext
-                href="#"
-                onClick={() => setPage(Math.min(page + 1, totalPages))}
-                className={page === totalPages ? "opacity-50 cursor-not-allowed" : ""}
-            >
-                Suivant
-            </PaginationNext>
-        </PaginationItem>
+    return (
+        <div className="overflow-x-auto">
+            <table className="table-auto border border-gray-400">
+                <thead className="bg-gray-200">
+                    <tr>
+                        <th className="px-4 py-2">Nomenclature</th>
+                        <th className="px-4 py-2">Libellé</th>
+                        <th className="px-4 py-2">pc</th>
+                        <th className="px-4 py-2">pcs</th>
+                        <th className="px-4 py-2">ps</th>
+                        <th className="px-4 py-2">rs</th>
+                        <th className="px-4 py-2">rau</th>
+                        <th className="px-4 py-2">tst</th>
+                        <th className="px-4 py-2">dd</th>
+                        <th className="px-4 py-2">tva</th>
+                        <th className="px-4 py-2">da</th>
+                        <th className="px-4 py-2">caf</th>
+                        <th className="px-4 py-2">ect</th>
+                        <th className="px-4 py-2">ttv</th>
+                        <th className="px-4 py-2">tfs</th>
+                        <th className="px-4 py-2">ddsh2022</th>
+                        <th className="px-4 py-2 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tarifsPage && tarifsPage.map((tarif, index) => (
+                        <tr key={index} className={(index % 2 === 0) ? 'bg-gray-100' : 'bg-white'}>
+                            <td className="border px-4 py-2">{tarif.nomenclature}</td>
+                            <td className="border px-4 py-2">{tarif.libelle}</td>
+                            <td className="border px-4 py-2">{tarif.pc}</td>
+                            <td className="border px-4 py-2">{tarif.pcs}</td>
+                            <td className="border px-4 py-2">{tarif.ps}</td>
+                            <td className="border px-4 py-2">{tarif.rs}</td>
+                            <td className="border px-4 py-2">{tarif.rau}</td>
+                            <td className="border px-4 py-2">{tarif.tst}</td>
+                            <td className="border px-4 py-2">{tarif.dd_sw}</td>
+                            <td className="border px-4 py-2">{tarif.tva}</td>
+                            <td className="border px-4 py-2">{tarif.da}</td>
+                            <td className="border px-4 py-2">{tarif.caf}</td>
+                            <td className="border px-4 py-2">{tarif.ect}</td>
+                            <td className="border px-4 py-2">{tarif.ttv}</td>
+                            <td className="border px-4 py-2">{tarif.tfs}</td>
+                            <td className="border px-4 py-2">{tarif.ddSh2022}</td>
+                            <td className="border px-4 py-2 w-1/12">
+                              <Link to={`/modifier/${tarif.id}`} className="w-full flex justify-end">
+                                  <Pencil />
+                              </Link>
+                            </td>
 
-        </PaginationContent>
-      </Pagination>
-    </div>
-    
-  );
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            {/* Pagination */}
+            <Pagination className="py-4">
+                <PaginationContent>
+                <PaginationItem>
+                    <PaginationPrevious
+                        href="#"
+                        onClick={() => setPage(Math.max(page - 1, 1))}
+                        className={page === 1 ? "opacity-50 cursor-not-allowed" : ""}
+                    >
+                        Précédent
+                    </PaginationPrevious>
+                </PaginationItem>
+                    {visiblePageNumbers.map((number) => (
+                        <PaginationItem key={number}>
+                            <PaginationLink
+                                href="#"
+                                isActive={page === number}
+                                onClick={() => setPage(number)}
+                            >
+                                {number}
+                            </PaginationLink>
+                        </PaginationItem>
+                    ))}
+                <PaginationItem>
+                    <PaginationNext
+                        href="#"
+                        onClick={() => setPage(Math.min(page + 1, totalPages))}
+                        className={page === totalPages ? "opacity-50 cursor-not-allowed" : ""}
+                    >
+                        Suivant
+                    </PaginationNext>
+                </PaginationItem>
+
+                </PaginationContent>
+            </Pagination>
+        </div>
+    );
 };
 
 export default TarifswList;

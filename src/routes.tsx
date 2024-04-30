@@ -6,6 +6,7 @@ import App from "./App";
 import { tarifRoutes } from "./pages/Tarif/routes/routes";
 import { tarifCalcul } from "./pages/Calcul/routes/routes";
 import { dashboard } from "./pages/Dashboard/routes/routes";
+import { modifRoutes } from "./pages/Modification/routes/routes";
 
 export const router = createBrowserRouter([
     {
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
 		    tarifRoutes,
         tarifCalcul,
         dashboard,
+        modifRoutes,
 	  ]
     },
   ]);

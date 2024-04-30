@@ -44,7 +44,7 @@ const NavMenu = () => {
 			<ul className="w-full">
 				{menus.map((menu) => (
 					<li key={menu.id} className="flex ml-2 gap-4 py-3 items-center cursor-pointer">
-						<NavLink to={menu.to} className={({isActive}) => `flex gap-4 p-3 items-center hover:text-primary hover:bg-muted ${isActive ? "text-primary bg-muted" : undefined }`}>
+						<NavLink to={menu.to} className={({isActive}) => `flex w-full gap-4 p-3 items-center hover:text-primary hover:bg-muted ${isActive ? "text-primary bg-muted" : undefined }`}>
 							<menu.icon className="size-4" />
 							<span>{menu.name}</span>
 						</NavLink>
