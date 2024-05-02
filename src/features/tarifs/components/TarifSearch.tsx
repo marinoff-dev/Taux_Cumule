@@ -192,142 +192,117 @@ function TarifSearch() {
 									
 							
     <div className="flex justify-center items-center h-full py-6">
-      <Card className="w-full md:w-[90%] lg:w-[75%]">
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="nomenclature">Nomenclature</Label>
-              <Input type="text" value={userInput} onChange={handleInputChange} placeholder="Entrez la nomenclature" />
-            </div>
-            <div className="flex flex-col space-y-2">
-              <Button className="mt-4 w-full" onClick={handleButtonClick}>Rechercher</Button>
-            </div>
-            <div className="flex flex-col space-y-3">
-              <Label htmlFor="libelle">Libellé</Label>
-              <h3 className="text-red-500 font-bold">{libelleData?.libelle || 'N/A'}</h3>
-            </div>
-            
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-            <div className="flex flex-col space-y-2">
-              <Button className="mt-4 w-full" onClick={handleButtonClicktaux}>Calculer le taux</Button>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="tauxCumule">Taux cumulé</Label>
-              <h3 className="text-red-500 font-bold">{taux.toFixed(2) !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
-            </div>
-          </div>
-          <form onSubmit={handleSimulateSubmit}>
+        <div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-              <div className="flex flex-col space-y-2">
-                <Label htmlFor="simulateValue">Simuler une valeur</Label>
-                <Input id="simulateValue" placeholder="Entrez une valeur" value={simulateValue || ''} onChange={handleInputSimulateChange} />
-              </div>
-              <div className="flex flex-col space-y-2">
-                <Button className="mt-4 w-full" type="submit">Calculer la valeur</Button>
-              </div>
-              <div className="flex flex-col space-y-2">
-                &nbsp;
-              </div>
+                <div className="flex flex-col space-y-2">
+                    <label htmlFor="nomenclature" className="font-semibold">Nomenclature</label>
+                    <input
+                    type="text"
+                    id="nomenclature"
+                    value={userInput}
+                    onChange={handleInputChange}
+                    placeholder="Entrez la nomenclature"
+                    className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+                    />
+                </div>
+                <div className="flex flex-col space-y-2">
+                    <button
+                    className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                    onClick={handleButtonClick}
+                    >
+                    Rechercher
+                    </button>
+                </div>
+                <div className="flex flex-col space-y-3">
+                    <label htmlFor="libelle" className="font-semibold">Libellé</label>
+                    <h3 className="text-red-500 font-bold">{libelleData?.libelle || 'N/A'}</h3>
+                </div>
             </div>
-          </form>
-        </CardContent>
-        <Table className="w-full">
-          <TableHeader>
-            <TableRow className="grid grid-cols-3 items-center">
-              <TableHead className="w-[100px]">Droit Taxe</TableHead>
-              <TableHead>Taux Cumule</TableHead>
-              <TableHead>Montant droit de taxe</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-            <TableCell className="flex-col">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+                <div className="flex flex-col space-y-2">
+                    <button
+                    className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                    onClick={handleButtonClicktaux}
+                    >
+                    Calculer le taux
+                    </button>
+                </div>
+                <div className="flex flex-col space-y-2">
+                    <label htmlFor="tauxCumule">Taux cumulé</label>
+                    <h3 className="text-red-500 font-bold">{taux.toFixed(2) !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
+                </div>
+            </div>
+            <form onSubmit={handleSimulateSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+                    <div className="flex flex-col space-y-2">
+                        <label htmlFor="simulateValue" className="font-semibold">Simuler une valeur</label>
+                        <input
+                            id="simulateValue"
+                            type="text"
+                            placeholder="Entrez une valeur"
+                            value={simulateValue || ''}
+                            onChange={handleInputSimulateChange}
+                            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+                        />
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <button
+                            type="submit"
+                            className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                        >
+                            Calculer la valeur
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div className="overflow-x-auto py-5">
+                <Table className="table-auto w-full border-collapse border border-gray-200">
+                    <thead className="bg-gray-200">
+                        <tr>
+                            <th className="px-4 py-2 border border-gray-200">Droit Taxe</th>
+                            <th className="px-4 py-2 border border-gray-200">Taux Cumulé</th>
+                            <th className="px-4 py-2 border border-gray-200">Montant droit de taxe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {[
+                            { label: 'PC', values: [tauxpc, calculatedValuetauxpc] },
+                            { label: 'PCS', values: [tauxpcs, calculatedValuetauxpcs] },
+                            { label: 'RS', values: [tauxrs, calculatedValuetauxrs] },
+                            { label: 'RAU', values: [tauxrau, calculatedValuetauxrau] },
+                            { label: 'PS', values: [tauxps, calculatedValuetauxps] },
+                            { label: 'ECT', values: [tauxect, calculatedValuetauxect] },
+                            { label: 'DD', values: [tauxdd, calculatedValuetauxdd] },
+                            { label: 'DA', values: [tauxda, calculatedValuetauxda] },
+                            { label: 'AIB', values: [tauxaib, calculatedValuetauxaib] },
+                            { label: 'TVA', values: [tauxtva, calculatedValuetauxtva] },
+                        ].map(({ label, values }, index) => (
+                            <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                                <td className="px-4 py-2 border border-gray-200">{label}</td>
+                                <td className="px-4 py-2 border border-gray-200">{values[0] !== undefined ? values[0] : 'N/A'}</td>
+                                <td className="px-4 py-2 border border-gray-200 text-blue-500 font-bold">{values[1] !== undefined ? values[1] : 'N/A'}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
 
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">PC</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxpc !== undefined ? calculatedValuetauxpc : 'N/A'}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
+                <div className="flex flex-col space-y-2">
+                    &nbsp;
+                </div>
+                <div className="flex flex-col space-y-2">
+                    <label htmlFor="totalTaux">Montant</label>
+                    <h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
+                </div>
+                <div className="flex flex-col space-y-2">
+                    &nbsp;
+                </div>
             </div>
-                
-
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">PCS</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpcs !== undefined ? tauxpcs : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxpcs !== undefined ? calculatedValuetauxpcs : 'N/A'}</h3>
-            </div>
-
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">RS</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxrs !== undefined ? calculatedValuetauxrs : 'N/A'}</h3>
-            </div>
-            
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">RAU</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrau !== undefined ? tauxrau : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxrau !== undefined ? calculatedValuetauxrau : 'N/A'}</h3>
-            </div>
-
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">PS</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxps !== undefined ? tauxps : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxps !== undefined ? calculatedValuetauxps : 'N/A'}</h3>
-            </div>
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">ECT</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxect !== undefined ? tauxect : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxect !== undefined ? calculatedValuetauxect : 'N/A'}</h3>
-            </div>
-            
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">DD</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxdd !== undefined ? tauxdd : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxdd !== undefined ? calculatedValuetauxdd : 'N/A'}</h3>
-            </div>
-              
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">DA</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxda !== undefined ? calculatedValuetauxda : 'N/A'}</h3>
-            </div>
-
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">AIB</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxaib !== undefined ? calculatedValuetauxaib : 'N/A'}</h3>
-            </div>
-
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">TVA</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxtva !== undefined ? calculatedValuetauxtva : 'N/A'}</h3>
-            </div>
-
-            <div>&nbsp;</div>
-              <div className="text-right">&nbsp;</div>
-           </TableCell>
-                  </TableRow>
-            
-          </TableBody>
-          
-        </Table>
-
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
-          <div className="flex flex-col space-y-2">
-            &nbsp;
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="totalTaux">Montant</Label>
-            <h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : ''}</h3>
-          </div>
-          <div className="flex flex-col space-y-2">
-            &nbsp;
-          </div>
         </div>
-      </Card>
     </div>
+
+
 
     
 
