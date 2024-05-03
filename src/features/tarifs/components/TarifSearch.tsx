@@ -148,17 +148,17 @@ function TarifSearch() {
 
   function handleSimulateSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const calculatedValue = simulateValue !== undefined ? simulateValue * taux : undefined;
-    const calculatedValuetauxrs = simulateValue !== undefined ? simulateValue * tauxrs : undefined;
-    const calculatedValuetauxps = simulateValue !== undefined ? simulateValue * tauxps : undefined;
-    const calculatedValuetauxpc = simulateValue !== undefined ? simulateValue * tauxpc : undefined;
-    const calculatedValuetauxpcs = simulateValue !== undefined ? simulateValue * tauxpcs : undefined;
-    const calculatedValuetauxrau = simulateValue !== undefined ? simulateValue * tauxrau : undefined;
-    const calculatedValuetauxect = simulateValue !== undefined ? simulateValue * tauxect : undefined;
-    const calculatedValuetauxdd = simulateValue !== undefined ? simulateValue * tauxdd : undefined;
-    const calculatedValuetauxda = simulateValue !== undefined ? simulateValue * tauxda : undefined;
-    const calculatedValuetauxaib = simulateValue !== undefined ? simulateValue * tauxaib : undefined;
-    const calculatedValuetauxtva = simulateValue !== undefined ? simulateValue * tauxtva : undefined;
+    const calculatedValue = simulateValue !== undefined ? Number(((simulateValue * taux)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxrs = simulateValue !== undefined ? Number(((simulateValue * tauxrs)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxps = simulateValue !== undefined ? Number(((simulateValue * tauxps)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxpc = simulateValue !== undefined ? Number(((simulateValue * tauxpc)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxpcs = simulateValue !== undefined ? Number(((simulateValue * tauxpcs)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxrau = simulateValue !== undefined ? Number(((simulateValue * tauxrau)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxect = simulateValue !== undefined ? Number(((simulateValue * tauxect)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxdd = simulateValue !== undefined ? Number(((simulateValue * tauxdd)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxda = simulateValue !== undefined ? Number(((simulateValue * tauxda)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxaib = simulateValue !== undefined ? Number(((simulateValue * tauxaib)/100).toFixed(2)) : undefined;
+    const calculatedValuetauxtva = simulateValue !== undefined ? Number(((simulateValue * tauxtva)/100).toFixed(2)) : undefined;
     setCalculatedValue(calculatedValue);
     setCalculatedValuetauxrs(calculatedValuetauxrs);
     setCalculatedValuetauxpc(calculatedValuetauxpc);
@@ -170,13 +170,20 @@ function TarifSearch() {
     setCalculatedValuetauxda(calculatedValuetauxda);
     setCalculatedValuetauxaib(calculatedValuetauxaib);
     setCalculatedValuetauxtva(calculatedValuetauxtva);
-
-
-
-    // Faites quelque chose avec la valeur calculée, par exemple l'afficher dans la console
-    console.log("Valeur calculée :", calculatedValue);
+  
+    // Faites quelque chose avec les valeurs calculées, par exemple les afficher dans la console
+    console.log("Valeur calculée taux :", calculatedValue);
+    console.log("Valeur calculée tauxrs :", calculatedValuetauxrs);
+    console.log("Valeur calculée tauxps :", calculatedValuetauxps);
+    console.log("Valeur calculée tauxpc :", calculatedValuetauxpc);
+    console.log("Valeur calculée tauxpcs :", calculatedValuetauxpcs);
+    console.log("Valeur calculée tauxrau :", calculatedValuetauxrau);
+    console.log("Valeur calculée tauxect :", calculatedValuetauxect);
+    console.log("Valeur calculée tauxdd :", calculatedValuetauxdd);
+    console.log("Valeur calculée tauxda :", calculatedValuetauxda);
+    console.log("Valeur calculée tauxaib :", calculatedValuetauxaib);
+    console.log("Valeur calculée tauxtva :", calculatedValuetauxtva);
   }
-
 
    
 
@@ -251,9 +258,9 @@ function TarifSearch() {
             </div>
 
             <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">RC</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxpc !== undefined ? tauxpc : 'N/A'}</h3>
+                <div className="mr-20">RS</div>
+                <h3 className="text-blue-400 font-bold flex-grow:">{tauxrs !== undefined ? tauxrs : 'N/A'}</h3>
+                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxrs !== undefined ? calculatedValuetauxrs : 'N/A'}</h3>
             </div>
             
             <div className="grid grid-cols-3 items-center">
@@ -278,49 +285,23 @@ function TarifSearch() {
                 <h3 className="text-blue-400 font-bold flex-grow:">{tauxdd !== undefined ? tauxdd : 'N/A'}</h3>
                 <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxdd !== undefined ? calculatedValuetauxdd : 'N/A'}</h3>
             </div>
-              
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">DA</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxda !== undefined ? tauxda : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxda !== undefined ? calculatedValuetauxda : 'N/A'}</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
+                <div className="flex flex-col space-y-2">
+                    &nbsp;
+                </div>
+                <div className="flex flex-col space-y-2">
+                    <label htmlFor="totalTaux">Montant</label>
+                    <h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
+                </div>
+                <div className="flex flex-col space-y-2">
+                    &nbsp;
+                </div>
             </div>
-
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">AIB</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxaib !== undefined ? tauxaib : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxaib !== undefined ? calculatedValuetauxaib : 'N/A'}</h3>
-            </div>
-
-            <div className="grid grid-cols-3 items-center">
-                <div className="mr-20">TVA</div>
-                <h3 className="text-blue-400 font-bold flex-grow:">{tauxtva !== undefined ? tauxtva : 'N/A'}</h3>
-                <h3 className="text-blue-400 font-bold flex-grow:">{calculatedValuetauxtva !== undefined ? calculatedValuetauxtva : 'N/A'}</h3>
-            </div>
-
-            <div>&nbsp;</div>
-              <div className="text-right">&nbsp;</div>
-           </TableCell>
-                  </TableRow>
-            
-          </TableBody>
-          
-        </Table>
-
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
-          <div className="flex flex-col space-y-2">
-            &nbsp;
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="totalTaux">Montant</Label>
-            <h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : ''}</h3>
-          </div>
-          <div className="flex flex-col space-y-2">
-            &nbsp;
-          </div>
         </div>
-      </Card>
     </div>
+
+
 
     
 
