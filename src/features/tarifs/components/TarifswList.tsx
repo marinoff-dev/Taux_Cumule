@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 import { useGetTarifswQuery } from "@/services";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Pencil } from "lucide-react";
+import { Pencil, Search } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const TarifswList = () => {
     const { isLoading, error, data: tarifs } = useGetTarifswQuery();
@@ -15,6 +18,7 @@ const TarifswList = () => {
       return (
         <p className="text-red-800 font-semibold text-2xl">Erreur ...</p>
       );
+      
   
     // Si tarifs est undefined, on retourne une valeur par défaut
     const tarifsArray = tarifs ?? [];
@@ -38,8 +42,21 @@ const TarifswList = () => {
     );
 
     return (
+        
         <div className="overflow-x-auto">
-            <table className="table-auto border border-gray-400">
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+    <div className="flex flex-col space-y-2 relative"> {/* Ajout de la classe relative */}
+        <Label htmlFor="nomenclature">Nomenclature</Label>
+        <div className="relative"> {/* Ajout de la classe relative */}
+            <Input type="text" placeholder="Recherche" className="pl-8 pr-4" /> {/* Ajout des classes pl-8 (padding-left) et pr-4 (padding-right) */}
+            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer" /> {/* Icône de recherche positionnée absolument */}
+        </div>
+    </div>
+</div>
+
+
+                
+            <table className="table-auto border border-gray-400 w-full">
                 <thead className="bg-gray-200">
                     <tr>
                         <th className="px-4 py-2">Nomenclature</th>
@@ -82,7 +99,7 @@ const TarifswList = () => {
                             <td className="border px-4 py-2">{tarif.ddSh2022}</td>
                             <td className="border px-4 py-2 w-1/12">
                               <Link to={`/modifier/${tarif.id}`} className="w-full flex justify-end">
-                                  <Pencil />
+                                  <Pencil className="text-blue-500" />
                               </Link>
                             </td>
 
@@ -92,38 +109,42 @@ const TarifswList = () => {
             </table>
 
             {/* Pagination */}
-            <Pagination className="py-4">
+            <Pagination className="py-4 flex justify-end"> {/* Pagination déplacée vers le côté droit */}
                 <PaginationContent>
-                <PaginationItem>
-                    <PaginationPrevious
-                        href="#"
-                        onClick={() => setPage(Math.max(page - 1, 1))}
-                        className={page === 1 ? "opacity-50 cursor-not-allowed" : ""}
-                    >
-                        Précédent
-                    </PaginationPrevious>
-                </PaginationItem>
+                    <PaginationItem>
+                        <PaginationPrevious
+                            href="#"
+                            onClick={() => setPage(Math.max(page - 1, 1))}
+                            className={page === 1 ? "opacity-50 cursor-not-allowed" : ""}
+                        >
+                            Précédent
+                        </PaginationPrevious>
+                    </PaginationItem>
                     {visiblePageNumbers.map((number) => (
                         <PaginationItem key={number}>
                             <PaginationLink
                                 href="#"
                                 isActive={page === number}
+                                className={`${
+                                    page === number
+                                        ? "bg-blue-600 text-white" // Page active avec une couleur sombre
+                                        : "text-gray-600" // Pages inactives avec une couleur grise
+                                }`}
                                 onClick={() => setPage(number)}
                             >
                                 {number}
                             </PaginationLink>
                         </PaginationItem>
                     ))}
-                <PaginationItem>
-                    <PaginationNext
-                        href="#"
-                        onClick={() => setPage(Math.min(page + 1, totalPages))}
-                        className={page === totalPages ? "opacity-50 cursor-not-allowed" : ""}
-                    >
-                        Suivant
-                    </PaginationNext>
-                </PaginationItem>
-
+                    <PaginationItem>
+                        <PaginationNext
+                            href="#"
+                            onClick={() => setPage(Math.min(page + 1, totalPages))}
+                            className={page === totalPages ? "opacity-50 cursor-not-allowed" : ""}
+                        >
+                            Suivant
+                        </PaginationNext>
+                    </PaginationItem>
                 </PaginationContent>
             </Pagination>
         </div>
