@@ -1,6 +1,6 @@
 type Tarifsw = {
     id?: string;
-    nomenclature: number;
+    nomenclature: string;
     libelle: string;
     pc: number;
     ps: number;
