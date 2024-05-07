@@ -4,7 +4,7 @@ import {
 
 import App from "./App";
 import { tarifRoutes } from "./pages/Tarif/routes/routes";
-import { tarifCalcul } from "./pages/Calcul/routes/routes";
+import { cedeaoCalcul, paysTiersCalcul, uemoaCalcul } from "./pages/Calcul/routes/routes";
 import { dashboard } from "./pages/Dashboard/routes/routes";
 import { modifRoutes } from "./pages/Modification/routes/routes";
 
@@ -15,7 +15,9 @@ export const router = createBrowserRouter([
       errorElement: <h1>Custom Error Page !!! </h1>,
 	    children: [
 		    tarifRoutes,
-        tarifCalcul,
+        paysTiersCalcul,
+        cedeaoCalcul,
+        uemoaCalcul,
         dashboard,
         modifRoutes,
 	  ]
