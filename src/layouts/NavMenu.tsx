@@ -1,11 +1,18 @@
 import { Calculator, LucideIcon, ClipboardList, LayoutDashboard, BadgePercent } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
+type SubMenu = {
+    id: string;
+    name: string;
+    to: string;
+}
+
 type NavProps = {
-	id: string;
-	name: string;
-	to: string;
-	icon: LucideIcon;
+    id: string;
+    name: string;
+    to: string;
+    icon: LucideIcon;
+    subMenus?: SubMenu[]; 
 }
 
 const menus: NavProps[] = [
@@ -16,11 +23,28 @@ const menus: NavProps[] = [
 		icon: LayoutDashboard,
 	},
 	{
-		id: 'calcul',
-		name: 'Calcul de taux',
-		to: "/calcul_taux",
-		icon: Calculator,
-	}, 
+        id: 'calcul',
+        name: 'Calcul de taux',
+        to: "/calcul_taux",
+        icon: Calculator,
+        subMenus: [
+            {
+                id: 'calcul_pays_tiers',
+                name: 'Calcul de taux',
+                to: "/calcul_taux/submenu1",
+            },
+            {
+                id: 'calcul_pays_cedeao',
+                name: 'Calcul de taux cedeao',
+                to: "/calcul_taux/cedeao",
+            },
+			{
+                id: 'calcul_pays_uemoa',
+                name: 'Calcul de taux uemoa',
+                to: "/calcul_taux/uemoa",
+            }
+        ]
+    }, 
 	{
 		id: 'tarifs',
 		name: 'Liste des tarifs',
