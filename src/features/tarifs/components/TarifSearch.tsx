@@ -260,6 +260,7 @@ function TarifSearch() {
 					<thead className="bg-gray-200">
 						<tr>
 							<th className="px-4 py-2 border border-gray-200">Droit Taxe</th>
+							<th className="px-4 py-2 border border-gray-200">Taux lineaire</th>
 							<th className="px-4 py-2 border border-gray-200">Taux Cumulé</th>
 							<th className="px-4 py-2 border border-gray-200">Montant droit de taxe</th>
 						</tr>
@@ -279,6 +280,7 @@ function TarifSearch() {
 						].map(({ label, values }, index) => (
 							<tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
 								<td className="px-4 py-2 border border-gray-200">{label}</td>
+								<td className="px-4 py-2 border border-gray-200">0</td>
 								<td className="px-4 py-2 border border-gray-200">{values[0] !== undefined ? values[0] : 'N/A'}</td>
 								<td className="px-4 py-2 border border-gray-200 text-blue-500 font-bold">{values[1] !== undefined ? values[1] : 'N/A'}</td>
 							</tr>
