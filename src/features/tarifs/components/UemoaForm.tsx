@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent } from "@/components/ui/card";
 import { TableColumnsSplit } from "lucide-react";
-function TarifSearch() {
+function UemoaForm() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
   const [taux, setTaux] = useState<number>(0);
@@ -310,4 +310,4 @@ function TarifSearch() {
   );
 }
 
-export default TarifSearch;
+export default UemoaForm;

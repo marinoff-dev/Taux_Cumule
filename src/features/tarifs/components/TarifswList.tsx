@@ -70,10 +70,10 @@ const TarifswList: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <table className="table-auto border border-gray-400 w-full">
+            <table className="table-auto border border-gray-400 w-full text-xs ">
                 <thead className="bg-blue-500">
                     <tr className="text-white">
-                        <th className="px-4 py-2">Nomenclature</th>
+                        <th className="px-4 py-2">Code</th>
                         <th className="px-4 py-2">Libellé</th>
                         <th className="px-4 py-2">pc</th>
                         <th className="px-4 py-2">pcs</th>
@@ -113,7 +113,7 @@ const TarifswList: React.FC = () => {
                             <td className="border px-4 py-2">{tarif.ddSh2022}</td>
                             <td className="border px-4 py-2 w-1/12">
                                 <Link to={`/modifier/${tarif.id}`} className="w-full flex justify-end">
-                                    <Pencil className="text-blue-500" />
+                                <Pencil className="text-blue-500 w-4 h-4"/>
                                 </Link>
                             </td>
                         </tr>
