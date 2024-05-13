@@ -32,6 +32,24 @@ type TarifswTaux = {
   // Autres propriétés...
 };
 
+type Tarifswtauxlineaire = {
+
+  nomenclature: number;
+  tva: number; 
+  da: number;
+  aib:number;
+  rs:number;
+  pc:number;
+  ps:number;
+  pcs:number;
+  rau:number;
+  ect:number;
+  dd:number;
+
+
+  // Autres propriétés...
+};
+
 export const tarifswApi = createApi({
   reducerPath: "api/",
   baseQuery: fetchBaseQuery({
@@ -44,7 +62,7 @@ export const tarifswApi = createApi({
       return headers
     }
   }),
-  tagTypes: ["tarifsw","tarifswtaux"],
+  tagTypes: ["tarifsw","tarifswtaux","tarifswtauxlineaire"],
 
   endpoints: (build) => ({
     getTarifsw: build.query<Tarifsw[], void>({
@@ -85,6 +103,8 @@ export const tarifswApi = createApi({
       },
     }),
 
+    
+
     getTauxByNomenclature: build.query<TarifswTaux, number>({
       
       query: (nomenclature: number) =>{
@@ -102,6 +122,27 @@ export const tarifswApi = createApi({
 
        // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
         return error ? [] : [{ type: "tarifswtaux", nomenclature: result?.nomenclature }];
+      },
+    }),
+
+
+    getTauxLineaireByNomenclature: build.query<Tarifswtauxlineaire, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tarif/tauxlineaire/${nomenclature}`
+          
+      },
+      providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le result du taux est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
+        return error ? [] : [{ type: "tarifswtauxlineaire", nomenclature: result?.nomenclature }];
       },
     }),
 
@@ -135,4 +176,6 @@ export const {
   useGetTarifswByIdQuery,
   useGetTarifswByNomenclatureQuery,
   useGetTauxByNomenclatureQuery,
+  useGetTauxLineaireByNomenclatureQuery,
+
 } = tarifswApi;
