@@ -213,25 +213,20 @@ function TarifSearch() {
 					Rechercher
 					</button>
 				</div>
-				<div className="flex flex-col space-y-3">
+				<div className="flex flex-col space-y-2">
 					<label htmlFor="libelle" className="font-semibold">Libellé</label>
-					<h3 className="text-red-500 font-bold">{libelleData?.libelle || 'N/A'}</h3>
+					<h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md">{libelleData?.libelle || 'N/A'}</h3>
 				</div>
 			</div>
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-				<div className="flex flex-col space-y-2">
-					<button
-					className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-					onClick={handleButtonClicktaux}
-					>
-					Calculer le taux
-					</button>
-				</div>
-				<div className="flex flex-col space-y-2">
-					<label htmlFor="tauxCumule">Taux cumulé</label>
-					<h3 className="text-red-500 font-bold">{taux.toFixed(2) !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
+			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
+				<div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
+					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
+					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
 				</div>
 			</div>
+
+
+
 			<form onSubmit={handleSimulateSubmit}>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
 					<div className="flex flex-col space-y-2">
@@ -289,21 +284,15 @@ function TarifSearch() {
 				</Table>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
-				<div className="flex flex-col space-y-2">
-					&nbsp;
-				</div>
-				<div className="flex flex-col space-y-2">
-					<label htmlFor="totalTaux">Montant</label>
-					<h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
-				</div>
-				<div className="flex flex-col space-y-2">
-					&nbsp;
+			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
+				<div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
+					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
+					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
 				</div>
 			</div>
+
 		</div>
 	</div>
-
 
 
 	
