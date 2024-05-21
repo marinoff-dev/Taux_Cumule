@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from "react";
-import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery } from "@/services/index";
+import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
 import { error } from "console";
 import { Button } from "@/components/ui/button";
@@ -48,7 +48,18 @@ function TarifSearch() {
   const [calculatedValuetauxpcs, setCalculatedValuetauxpcs] = useState<number | undefined>(undefined);
 
 
+// Recuperation des taux Linéaire 
 
+			const [da, setda] = useState<number>(0);
+			const [tva, settva] = useState<number>(0);
+			const [rs, setrs] = useState<number>(0);
+			const [ps, setps] = useState<number>(0);
+			const [pcs, setpcs] = useState<number>(0);
+			const [rau, setrau] = useState<number>(0);
+			const [pc, setpc] = useState<number>(0);
+			const [dd, setdd] = useState<number>(0);
+			const [ect, setect] = useState<number>(0);
+			const [aib, setaib] = useState<number>(0);
 
 
 
@@ -57,6 +68,8 @@ function TarifSearch() {
   const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
 
   const { data: tauxData , isError} = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
+  const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
+
 
   //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
 
@@ -87,15 +100,33 @@ function TarifSearch() {
 	  setTauxect(tauxData.tauxect)
 	  setTauxdd(tauxData.tauxdd)
 
-
-
-
-
 	}
 	else{
 	  console.log("le taux récupéré hvdcsh:", tauxData);
 	}
   }, [tauxData]);
+
+
+
+  useEffect(() => {
+	if (tauxLineaireData) {
+	  console.log("le taux récupéré sdcdcg:", tauxLineaireData);
+	  setda(tauxLineaireData.da);
+	  setaib(tauxLineaireData.aib)
+	  settva(tauxLineaireData.tva)
+	  setrs(tauxLineaireData.rs)
+	  setps(tauxLineaireData.ps)
+	  setpc(tauxLineaireData.pc)
+	  setpcs(tauxLineaireData.pcs)
+	  setrau(tauxLineaireData.rau)
+	  setect(tauxLineaireData.ect)
+	  setdd(tauxLineaireData.dd)
+
+	}
+	else{
+	  console.log("le taux récupéré hvdcsh:", tauxData);
+	}
+  }, [tauxLineaireData]);
 
  if(isLoading){
   return <div>chargement...</div>
@@ -213,25 +244,20 @@ function TarifSearch() {
 					Rechercher
 					</button>
 				</div>
-				<div className="flex flex-col space-y-3">
+				<div className="flex flex-col space-y-2">
 					<label htmlFor="libelle" className="font-semibold">Libellé</label>
-					<h3 className="text-red-500 font-bold">{libelleData?.libelle || 'N/A'}</h3>
+					<h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md">{libelleData?.libelle || 'N/A'}</h3>
 				</div>
 			</div>
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-				<div className="flex flex-col space-y-2">
-					<button
-					className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-					onClick={handleButtonClicktaux}
-					>
-					Calculer le taux
-					</button>
-				</div>
-				<div className="flex flex-col space-y-2">
-					<label htmlFor="tauxCumule">Taux cumulé</label>
-					<h3 className="text-red-500 font-bold">{taux.toFixed(2) !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
+			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
+				<div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
+					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
+					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
 				</div>
 			</div>
+
+
+
 			<form onSubmit={handleSimulateSubmit}>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
 					<div className="flex flex-col space-y-2">
@@ -267,43 +293,37 @@ function TarifSearch() {
 					</thead>
 					<tbody>
 						{[
-							{ label: 'PC', values: [tauxpc, calculatedValuetauxpc] },
-							{ label: 'PCS', values: [tauxpcs, calculatedValuetauxpcs] },
-							{ label: 'RS', values: [tauxrs, calculatedValuetauxrs] },
-							{ label: 'RAU', values: [tauxrau, calculatedValuetauxrau] },
-							{ label: 'PS', values: [tauxps, calculatedValuetauxps] },
-							{ label: 'ECT', values: [tauxect, calculatedValuetauxect] },
-							{ label: 'DD', values: [tauxdd, calculatedValuetauxdd] },
-							{ label: 'DA', values: [tauxda, calculatedValuetauxda] },
-							{ label: 'AIB', values: [tauxaib, calculatedValuetauxaib] },
-							{ label: 'TVA', values: [tauxtva, calculatedValuetauxtva] },
+							{ label: 'PC', values: [pc,tauxpc, calculatedValuetauxpc] },
+							{ label: 'PCS', values: [pcs, tauxpcs, calculatedValuetauxpcs] },
+							{ label: 'RS', values: [rs, tauxrs, calculatedValuetauxrs] },
+							{ label: 'RAU', values: [rau, tauxrau, calculatedValuetauxrau] },
+							{ label: 'PS', values: [ps, tauxps, calculatedValuetauxps] },
+							{ label: 'ECT', values: [ect, tauxect, calculatedValuetauxect] },
+							{ label: 'DD', values: [dd, tauxdd, calculatedValuetauxdd] },
+							{ label: 'DA', values: [da, tauxda, calculatedValuetauxda] },
+							{ label: 'AIB', values: [aib, tauxaib, calculatedValuetauxaib] },
+							{ label: 'TVA', values: [tva, tauxtva, calculatedValuetauxtva] },
 						].map(({ label, values }, index) => (
 							<tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
 								<td className="px-4 py-2 border border-gray-200">{label}</td>
-								<td className="px-4 py-2 border border-gray-200">0</td>
 								<td className="px-4 py-2 border border-gray-200">{values[0] !== undefined ? values[0] : 'N/A'}</td>
-								<td className="px-4 py-2 border border-gray-200 text-blue-500 font-bold">{values[1] !== undefined ? values[1] : 'N/A'}</td>
+								<td className="px-4 py-2 border border-gray-200">{values[1] !== undefined ? values[1] : 'N/A'}</td>
+								<td className="px-4 py-2 border border-gray-200 text-blue-500 font-bold">{values[2] !== undefined ? values[2] : 'N/A'}</td>
 							</tr>
 						))}
 					</tbody>
 				</Table>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-6">
-				<div className="flex flex-col space-y-2">
-					&nbsp;
-				</div>
-				<div className="flex flex-col space-y-2">
-					<label htmlFor="totalTaux">Montant</label>
-					<h3 className="text-red-500 font-bold">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
-				</div>
-				<div className="flex flex-col space-y-2">
-					&nbsp;
+			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
+				<div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
+					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
+					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
 				</div>
 			</div>
+
 		</div>
 	</div>
-
 
 
 	
