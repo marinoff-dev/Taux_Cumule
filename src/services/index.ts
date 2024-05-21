@@ -14,7 +14,7 @@ type TarifswLibelle = {
 };
 
 type TarifswTaux = {
-
+  counter:number;
   taux: number;
   nomenclature: number;
   tauxtva: number; 
