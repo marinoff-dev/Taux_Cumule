@@ -146,6 +146,27 @@ export const tarifswApi = createApi({
     }),
 
 
+    getTauxUemoaByNomenclature: build.query<TarifswTaux, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tarifUemoa/taux/${nomenclature}`
+          
+      },
+      providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le result du taux est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
+        return error ? [] : [{ type: "tarifswtaux", nomenclature: result?.nomenclature }];
+      },
+    }),
+
+
     getTauxLineaireByNomenclature: build.query<Tarifswtauxlineaire, number>({
       
       query: (nomenclature: number) =>{
@@ -198,5 +219,6 @@ export const {
   useGetTauxByNomenclatureQuery,
   useGetTauxLineaireByNomenclatureQuery,
   useGetTauxCedeaoByNomenclatureQuery,
+  useGetTauxUemoaByNomenclatureQuery,
 
 } = tarifswApi;
