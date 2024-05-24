@@ -243,18 +243,18 @@ function UemoaForm() {
 					  >
 					  Rechercher
 					  </button>
-				  </div>
-				  <div className="flex flex-col space-y-2">
+				  	</div>
+				  	<div className="flex flex-col space-y-2">
 					  <label htmlFor="libelle" className="font-semibold">Libellé</label>
 					  <h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md">{libelleData?.libelle || 'N/A'}</h3>
-				  </div>
-			  </div>
-			  <div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
-				  <div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
-					  <label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
-					  <h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
-				  </div>
-			  </div>
+				  	</div>
+			  	</div>
+			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
+				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
+					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
+					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
+				</div>
+			</div>
   
   
   
@@ -315,15 +315,15 @@ function UemoaForm() {
 				  </Table>
 			  </div>
   
-			  <div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
-				  <div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
-					  <label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
-					  <h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
-				  </div>
-			  </div>
+			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
+				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
+					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
+					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
+				</div>
+			</div>
   
 		  </div>
-	  </div>
+	</div>
   
   
 	  
