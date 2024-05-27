@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom"
 const Tarifsw = () => {
   return (
     <div>
-      <PageTitle>Liste des Nomenclatures</PageTitle>
+      <PageTitle>Liste des Positions</PageTitle>
       <Outlet/>
     </div>
   )

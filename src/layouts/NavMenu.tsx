@@ -51,7 +51,7 @@ const menus: NavProps[] = [
     },
     {
         id: 'tarifs',
-        name: 'Liste des tarifs',
+        name: 'Liste des positions',
         to: "/tarifs",
         icon: ClipboardList,
     },

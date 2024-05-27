@@ -123,8 +123,7 @@ const TarifswList: React.FC = () => {
 
             <center>
                 <div>
-                    <h2>Le nombre de nomenclature est :</h2>
-                    <h1 className="text-sm text-muted-foreground text-red-500 font-bold">6323</h1>
+                    <h4 className="text-sm text-blue-500 font-bold hover:text-blue-700 hover:cursor-pointer">6323 positions</h4>
                 </div>
             </center>
 
