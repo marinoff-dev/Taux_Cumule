@@ -276,7 +276,7 @@ function UemoaForm() {
 							  type="submit"
 							  className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
 						  >
-							  Calculer la valeur
+							  Calculer les droits
 						  </button>
 					  </div>
 				  </div>

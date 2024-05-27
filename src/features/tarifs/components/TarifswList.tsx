@@ -119,7 +119,16 @@ const TarifswList: React.FC = () => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table><br/>
+
+            <center>
+                <div>
+                    <h2>Le nombre de nomenclature est :</h2>
+                    <h1 className="text-sm text-muted-foreground text-red-500 font-bold">6323</h1>
+                </div>
+            </center>
+
+            
             <Pagination className="py-4 flex justify-end">
                 <PaginationContent>
                     <PaginationItem>
