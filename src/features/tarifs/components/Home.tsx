@@ -63,7 +63,7 @@ const Home = () => {
 						</Avatar>
 						<div className="grid gap-1">
 							<p className="text-lg font-medium">Nombre de personnes enregistrés</p>
-							<p className="text-sm text-muted-foreground text-red-500 font-bold">01</p>
+							<p className="text-sm text-muted-foreground text-blue-500 font-bold">01</p>
 						</div>
 					</div>
 			
@@ -77,7 +77,7 @@ const Home = () => {
 						</Avatar>
 						<div className="grid gap-1">
 							<p className="text-lg font-medium">Nombre d'utilisation de l'application</p>
-							<h3 className="text-red-500 font-bold">{tauxData?.counter || 'N/A'}</h3>
+							<h3 className="text-blue-500 font-bold">{tauxData?.counter || 'N/A'}</h3>
 						</div>
 					</div>
 			
@@ -91,7 +91,7 @@ const Home = () => {
 						</Avatar>
 						<div className="grid gap-1">
 							<p className="text-lg font-medium">Nombre de Positions</p>
-							<p className="text-sm text-muted-foreground text-red-500 font-bold">00</p>
+							<p className="text-sm text-muted-foreground text-blue-500 font-bold">00</p>
 						</div>
 					</div>
 			
@@ -105,7 +105,7 @@ const Home = () => {
 						</Avatar>
 						<div className="grid gap-1">
 							<p className="text-lg font-medium">Nombre de calculs effectués</p>
-							<p className="text-sm text-muted-foreground text-red-500 font-bold">00</p>
+							<p className="text-sm text-muted-foreground text-blue-500 font-bold">00</p>
 						</div>
 					</div>
 			

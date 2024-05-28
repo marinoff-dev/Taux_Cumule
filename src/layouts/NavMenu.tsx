@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Calculator, LucideIcon, ClipboardList, LayoutDashboard, BadgePercent, ChevronDown, ChevronUp } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { Calculator, LucideIcon, ClipboardList, LayoutDashboard, BadgePercent, ChevronDown, ChevronUp, History } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import logodouane from '@/assets/logodouane.png'
 
 type SubMenu = {
     id: string;
@@ -55,10 +56,17 @@ const menus: NavProps[] = [
         to: "/tarifs",
         icon: ClipboardList,
     },
+    {
+        id: 'historiques',
+        name: 'Historique des calculs',
+        to: "/historiques_calcul",
+        icon: History,
+    },
 ];
 
 const NavMenu = () => {
     const [openMenu, setOpenMenu] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const handleMenuClick = (menuId: string) => {
         if (openMenu === menuId) {
@@ -68,10 +76,19 @@ const NavMenu = () => {
         }
     };
 
+        
+        const handleLogoClick = () => {
+            navigate('/home')
+            window.location.reload();
+        };
+
     return (
         <div className="flex flex-col h-full max-h-screen">
             <div className="flex h-14 items-center gap-4 border-b px-4 lg:h- [60px] lg:px-6">
-                <BadgePercent className="size-6" />
+                {/*
+                    <BadgePercent className="size-6" />
+                */}
+                <img className="size-10" src={logodouane} alt="logodouane" onClick={handleLogoClick} />
                 <span>Tarifs Douaniers</span>
             </div>
 
