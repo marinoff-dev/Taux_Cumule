@@ -126,7 +126,7 @@ const TarifswList: React.FC = () => {
                     <h4 className="text-sm text-blue-500 font-bold hover:text-blue-700 hover:cursor-pointer">6323 positions</h4>
                 </div>
             </center>
-
+ 
             
             <Pagination className="py-4 flex justify-end">
                 <PaginationContent>

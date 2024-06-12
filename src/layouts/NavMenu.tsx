@@ -58,7 +58,7 @@ const menus: NavProps[] = [
     },
     {
         id: 'historiques',
-        name: 'Historique des calculs',
+        name: 'Historique',
         to: "/historiques_calcul",
         icon: History,
     },
