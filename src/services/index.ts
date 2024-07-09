@@ -10,6 +10,7 @@ import { isNaN } from "lodash";
 type TarifswLibelle = {
   libelle: string;
   nomenclature: number;
+  statut : string
   // Autres propriétés...
 };
 
