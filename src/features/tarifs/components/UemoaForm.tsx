@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxUemoaByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
 import { error } from "console";
@@ -65,19 +65,26 @@ function UemoaForm() {
   
   
 	const [libelle, setLibelle] = useState<string>("");
+	const [statut, setStatut] = useState<string>("");
 	const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
   
 	const { data: tauxData , isError} = useGetTauxUemoaByNomenclatureQuery(value !== undefined ? value : 0);
 	const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
-  
-  
+	const [isChecked, setIsChecked] = useState(false);
+ 
+
 	//console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
+  
+	const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+	  setIsChecked(e.target.checked);
+	};
   
   
 	useEffect(() => {
 	  if (libelleData) {
 		console.log("Libellé récupéré :", libelleData);
 		setLibelle(libelleData.libelle);
+		setLibelle(libelleData.statut);
 	  }
 	  else{
 		console.log("Libellé récupéré :", libelleData);
@@ -137,7 +144,7 @@ function UemoaForm() {
 	  setUserInput(event.target.value.trim());
 		
 	}
-  
+
 	async function handleButtonClick() {
 	  //const parsedValue = parseInt(userInput, 10);
 	  console.log("le userinput est :", userInput)
@@ -248,6 +255,23 @@ function UemoaForm() {
 					  <label htmlFor="libelle" className="font-semibold">Libellé</label>
 					  <h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md">{libelleData?.libelle || 'N/A'}</h3>
 				  	</div>
+					<div className="flex items-center space-x-2">
+						{statut === "OK" ? (
+						<div className="flex items-center space-x-2">
+							<input
+							type="checkbox"
+							id="nomenclatureCheckbox"
+							checked={isChecked}
+							onChange={handleCheckboxChange}
+							className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+							/>
+							<label htmlFor="nomenclatureCheckbox">Grosse cylindre</label>
+						</div>
+							
+						) : (
+							<p></p>
+						)}
+					</div>
 			  	</div>
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
