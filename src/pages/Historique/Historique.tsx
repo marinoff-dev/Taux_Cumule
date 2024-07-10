@@ -1,13 +1,13 @@
 import { PageTitle } from "@/components/shared"
 import { Outlet } from "react-router-dom"
 
-const Historique = () => {
+const historiques = () => {
   return (
     <div>
-      <PageTitle>Historique</PageTitle>
+      <PageTitle>Historique des calculs</PageTitle>
       <Outlet/>
     </div>
   )
 }
 
-export default Historique
+export default historiques

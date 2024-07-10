@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
 import { error } from "console";
@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent } from "@/components/ui/card";
 import { TableColumnsSplit } from "lucide-react";
+import { OK } from "zod";
+//import React, { useState, ChangeEvent } from 'react';
 function TarifSearch() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
@@ -65,19 +67,26 @@ function TarifSearch() {
 
 
   const [libelle, setLibelle] = useState<string>("");
+  const [statut, setStatut] = useState<string>("");
   const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
 
   const { data: tauxData , isError} = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
   const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
+  const [isChecked, setIsChecked] = useState(false);
 
-
+ 
   //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
 
+  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
+  };
 
   useEffect(() => {
 	if (libelleData) {
 	  console.log("Libellé récupéré :", libelleData);
 	  setLibelle(libelleData.libelle);
+	  setStatut(libelleData.statut);
+	   
 	}
 	else{
 	  console.log("Libellé récupéré :", libelleData);
@@ -246,11 +255,39 @@ function TarifSearch() {
 				</div>
 				<div className="flex flex-col space-y-2">
 					<label htmlFor="libelle" className="font-semibold">Libellé</label>
-					<h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md">{libelleData?.libelle || 'N/A'}</h3>
+					<h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md text-sm">{libelleData?.libelle || 'N/A'}</h3>
 				</div>
+
+				<div className="flex flex-col space-y-2">
+					<div className="flex items-center space-x-2">
+						{statut === "OK" ? (
+						<div className="flex items-center space-x-2">
+							<input
+							type="checkbox"
+							id="nomenclatureCheckbox"
+							checked={isChecked}
+							onChange={handleCheckboxChange}
+							className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+							/>
+							<label htmlFor="nomenclatureCheckbox">Grosse cylindre</label>
+						</div>
+							
+						) : (
+							<p></p>
+						)}
+					</div>
+				</div>
+				<button
+				className="mt-8 md:mt-8 w-60 bg-blue-500
+				 text-white rounded-md py-2 px-4
+				 hover:bg-blue-600 focus:outline-none
+				 focus:bg-blue-600">
+					Calculer
+				</button>
 			</div>
+			
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
-				<div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
+				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
 					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
 				</div>
@@ -276,7 +313,7 @@ function TarifSearch() {
 							type="submit"
 							className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
 						>
-							Calculer la valeur
+							Calculer les droits
 						</button>
 					</div>
 				</div>
@@ -316,7 +353,7 @@ function TarifSearch() {
 			</div>
 
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
-				<div className="flex flex-col space-y-2 border border-gray-300 p-2 rounded-md w-full">
+				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
 					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
 				</div>

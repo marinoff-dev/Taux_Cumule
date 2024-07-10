@@ -10,6 +10,7 @@ import { isNaN } from "lodash";
 type TarifswLibelle = {
   libelle: string;
   nomenclature: number;
+  statut : string
   // Autres propriétés...
 };
 
@@ -125,6 +126,47 @@ export const tarifswApi = createApi({
       },
     }),
 
+    getTauxCedeaoByNomenclature: build.query<TarifswTaux, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tarifCedeao/taux/${nomenclature}`
+          
+      },
+      providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le result du taux est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
+        return error ? [] : [{ type: "tarifswtaux", nomenclature: result?.nomenclature }];
+      },
+    }),
+
+
+    getTauxUemoaByNomenclature: build.query<TarifswTaux, number>({
+      
+      query: (nomenclature: number) =>{
+        console.log("la nomenclature est :", nomenclature)
+        return `tarifUemoa/taux/${nomenclature}`
+          
+      },
+      providesTags: (result, error) => {
+      console.log(error)
+      console.log("Le result du taux est :")
+
+      console.log(result)
+
+       
+
+       // console.log(error ? "jai renvoyé une erreur" : [{ type: "tarifsw", nomenclature: result?.nomenclature }])
+        return error ? [] : [{ type: "tarifswtaux", nomenclature: result?.nomenclature }];
+      },
+    }),
+
 
     getTauxLineaireByNomenclature: build.query<Tarifswtauxlineaire, number>({
       
@@ -177,5 +219,7 @@ export const {
   useGetTarifswByNomenclatureQuery,
   useGetTauxByNomenclatureQuery,
   useGetTauxLineaireByNomenclatureQuery,
+  useGetTauxCedeaoByNomenclatureQuery,
+  useGetTauxUemoaByNomenclatureQuery,
 
 } = tarifswApi;

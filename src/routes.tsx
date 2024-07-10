@@ -7,6 +7,7 @@ import { tarifRoutes } from "./pages/Tarif/routes/routes";
 import { cedeaoCalcul, paysTiersCalcul, uemoaCalcul } from "./pages/Calcul/routes/routes";
 import { dashboard } from "./pages/Dashboard/routes/routes";
 import { modifRoutes } from "./pages/Modification/routes/routes";
+import { historiqueRoutes } from "./pages/Historique/routes/routes";
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
         uemoaCalcul,
         dashboard,
         modifRoutes,
+        historiqueRoutes,        
 	  ]
     },
   ]);

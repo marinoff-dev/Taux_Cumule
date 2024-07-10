@@ -1,8 +1,58 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent} from "@/components/ui/card";
 import { User, Globe, BadgePercent, Plus } from "lucide-react";
+import { Bar } from 'react-chartjs-2';
+
+import React, { useState , useEffect } from "react";
+
+
+import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
+
 
 const Home = () => {
+
+	const [value, setValue] = useState<number | undefined>(undefined);
+	const [userInput, setUserInput] = useState<string>("");
+
+
+	const [counter, setCounter] = useState<number>(0);
+
+	const { data: tauxData , isError} = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
+
+	
+	useEffect(() => {
+		if (tauxData) {
+		  console.log("le taux récupéré sdcdcg:", tauxData);
+		  setCounter(tauxData.counter);
+	
+	
+		}
+		else{
+		  console.log("le taux récupéré hvdcsh:", tauxData);
+		}
+	  }, [tauxData]);
+	
+
+
+	  async function handleButtonClicktaux() {
+		try {
+		  const counter = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
+		  console.log("la valeur du compter est : ", counter);
+		  setCounter(counter); // Mettre à jour l'état taux avec la valeur récupérée
+		} catch (error) {
+		  console.log("Une erreur s'est produite lors de la récupération du taux :", error);
+		}
+	  }
+	//   const data = {
+	// 	labels: ["PS", "PCS", "PC", "RS", "RAU", "ECT", "DA", "DD"],
+	// 	datasets: [
+	// 	  {
+	// 		label: "Les Tarifs douaniers",
+	// 		data: [10, 2, 3, 5, 2, 8, 2, 6],
+	// 	  },
+	// 	],
+	//   };
+
   return (
     <>
 		<div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
@@ -15,7 +65,7 @@ const Home = () => {
 						</Avatar>
 						<div className="grid gap-1">
 							<p className="text-lg font-medium">Nombre de personnes enregistrés</p>
-							<p className="text-sm text-muted-foreground">01</p>
+							<p className="text-sm text-muted-foreground text-blue-500 font-bold">01</p>
 						</div>
 					</div>
 			
@@ -29,7 +79,7 @@ const Home = () => {
 						</Avatar>
 						<div className="grid gap-1">
 							<p className="text-lg font-medium">Nombre d'utilisation de l'application</p>
-							<p className="text-sm text-muted-foreground">01</p>
+							<h3 className="text-blue-500 font-bold">{tauxData?.counter || 'N/A'}</h3>
 						</div>
 					</div>
 			
@@ -42,8 +92,8 @@ const Home = () => {
 							<BadgePercent />
 						</Avatar>
 						<div className="grid gap-1">
-							<p className="text-lg font-medium">Nombre de tarifs enregistrés</p>
-							<p className="text-sm text-muted-foreground">00</p>
+							<p className="text-lg font-medium">Nombre de Positions</p>
+							<p className="text-sm text-muted-foreground text-blue-500 font-bold">00</p>
 						</div>
 					</div>
 			
@@ -57,12 +107,17 @@ const Home = () => {
 						</Avatar>
 						<div className="grid gap-1">
 							<p className="text-lg font-medium">Nombre de calculs effectués</p>
-							<p className="text-sm text-muted-foreground">00</p>
+							<p className="text-sm text-muted-foreground text-blue-500 font-bold">00</p>
 						</div>
 					</div>
 			
 				</CardContent>
 			</Card>
+		</div>
+		<div className= "container">
+			<div className= "card"> 
+				{/* <Bar data = {data} /> */}
+			</div>
 		</div>
   
 	</>
