@@ -73,8 +73,8 @@ function TarifSearch() {
   const { data: tauxData , isError} = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
   const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
   const [isChecked, setIsChecked] = useState(false);
- 
 
+ 
   //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -277,7 +277,15 @@ function TarifSearch() {
 						)}
 					</div>
 				</div>
+				<button
+				className="mt-8 md:mt-8 w-60 bg-blue-500
+				 text-white rounded-md py-2 px-4
+				 hover:bg-blue-600 focus:outline-none
+				 focus:bg-blue-600">
+					Calculer
+				</button>
 			</div>
+			
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>

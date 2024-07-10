@@ -1,6 +1,7 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent} from "@/components/ui/card";
 import { User, Globe, BadgePercent, Plus } from "lucide-react";
+import { Bar } from 'react-chartjs-2';
 
 import React, { useState , useEffect } from "react";
 
@@ -18,6 +19,7 @@ const Home = () => {
 
 	const { data: tauxData , isError} = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
 
+	
 	useEffect(() => {
 		if (tauxData) {
 		  console.log("le taux récupéré sdcdcg:", tauxData);
@@ -40,16 +42,16 @@ const Home = () => {
 		} catch (error) {
 		  console.log("Une erreur s'est produite lors de la récupération du taux :", error);
 		}
-		
 	  }
-
-
-
-
-
-
-
-
+	//   const data = {
+	// 	labels: ["PS", "PCS", "PC", "RS", "RAU", "ECT", "DA", "DD"],
+	// 	datasets: [
+	// 	  {
+	// 		label: "Les Tarifs douaniers",
+	// 		data: [10, 2, 3, 5, 2, 8, 2, 6],
+	// 	  },
+	// 	],
+	//   };
 
   return (
     <>
@@ -111,6 +113,11 @@ const Home = () => {
 			
 				</CardContent>
 			</Card>
+		</div>
+		<div className= "container">
+			<div className= "card"> 
+				{/* <Bar data = {data} /> */}
+			</div>
 		</div>
   
 	</>
