@@ -30,8 +30,6 @@ const Header = () => {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>Settings</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Logout</DropdownMenuItem>
-				<DropdownMenuSeparator />
 			</DropdownMenuContent>
 			</DropdownMenu>
 		</div>
