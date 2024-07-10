@@ -8,7 +8,6 @@ import {
 	Table,
   
 } from "@/components/ui/table"
-//import React, { useState, ChangeEvent } from 'react';
 function TarifSearch() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
@@ -141,10 +140,16 @@ function TarifSearch() {
 	console.log("le userinput est :", userInput)
 	console.log("le userinput est :", typeof userInput)
 
+	if (!userInput) {
+		setNotification("Veuillez entrer une nomenclature avant de rechercher.");
+		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 3 secondes
+		return;
+	}
+
 	if (isNaN(+userInput) || userInput.length !== 10) {
 		setNotification("Nomenclature invalide! Veuillez entrer un nombre de 10 chiffres.");
 		setValue(undefined);
-		setTimeout(() => setNotification(""), 3000); // Auto close after 3 seconds
+		setTimeout(() => setNotification(""), 5000); // Auto close after 3 seconds
 	  } else {
 		setValue(+userInput);
   
@@ -219,6 +224,12 @@ function TarifSearch() {
 	console.log("Valeur calculée tauxda :", calculatedValuetauxda);
 	console.log("Valeur calculée tauxaib :", calculatedValuetauxaib);
 	console.log("Valeur calculée tauxtva :", calculatedValuetauxtva);
+
+	if (!userInput) {
+		setNotification("Veuillez entrer une nomenclature avant de calculer les droits.");
+		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 3 secondes
+		return;
+	}
   }
 
    
