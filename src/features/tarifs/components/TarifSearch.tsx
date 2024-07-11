@@ -289,7 +289,7 @@ function TarifSearch() {
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
-					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
+					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'} %</h3>
 				</div>
 			</div>
 
@@ -307,6 +307,10 @@ function TarifSearch() {
 							onChange={handleInputSimulateChange}
 							className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
 						/>
+					</div>
+					<div className="flex flex-col space-y-2">
+						<label htmlFor="simulateValue" className="font-semibold text-center">Devise étrangère</label>
+						<h3 className="text-black-400 font-bold text-center">XOF</h3>
 					</div>
 					<div className="flex flex-col space-y-2">
 						<button
@@ -355,7 +359,7 @@ function TarifSearch() {
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
-					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
+					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'} <span className="text-black text-xs">FCFA</span></h3>
 				</div>
 			</div>
 
