@@ -62,8 +62,6 @@ function TarifSearch() {
   const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
   const [isChecked, setIsChecked] = useState(false);
 
- 
-  //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
@@ -157,15 +155,7 @@ function TarifSearch() {
 		  .then((res) => res.json())
 		  .catch((error) => console.log("l'erreur est ", error.message));
 	  }
-   // console.log("le libelle est : ", libelle);
-	
-
-   /* if (isNaN(+userInput)) {
-
-	   setValue(+userInput);
-	} else {
-	  setValue(undefined);
-	}*/
+  
 
 	
   }
@@ -227,7 +217,7 @@ function TarifSearch() {
 
 	if (!userInput) {
 		setNotification("Veuillez entrer une nomenclature avant de calculer les droits.");
-		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 3 secondes
+		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 5 secondes
 		return;
 	}
   }
