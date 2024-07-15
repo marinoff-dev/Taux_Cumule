@@ -26,9 +26,9 @@ const Header = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56" align="end">
-				<DropdownMenuItem>My Account</DropdownMenuItem>
+				<DropdownMenuItem>Compte</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Settings</DropdownMenuItem>
+				<DropdownMenuItem>Parametre</DropdownMenuItem>
 				<DropdownMenuSeparator />
 			</DropdownMenuContent>
 			</DropdownMenu>
