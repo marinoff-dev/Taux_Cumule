@@ -1,23 +1,13 @@
 import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxCedeaoByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
-import { error } from "console";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { taux } from "@/utils/_constants"
+import Notification from "./Notification";
 
 import {
 	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
   
 } from "@/components/ui/table"
-import { Card, CardContent } from "@/components/ui/card";
-import { TableColumnsSplit } from "lucide-react";
+
 function TarifSearch() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
@@ -47,7 +37,7 @@ function TarifSearch() {
   const [calculatedValuetauxda, setCalculatedValuetauxda] = useState<number | undefined>(undefined);
   const [calculatedValuetauxpcs, setCalculatedValuetauxpcs] = useState<number | undefined>(undefined);
 
-
+  const [notification, setNotification] = useState<string>("");
 // Recuperation des taux Linéaire 
 
 			const [da, setda] = useState<number>(0);
@@ -150,10 +140,23 @@ function TarifSearch() {
 	console.log("le userinput est :", userInput)
 	console.log("le userinput est :", typeof userInput)
 
-	setValue(+userInput);
+	if (!userInput) {
+		setNotification("Veuillez entrer une nomenclature avant de rechercher.");
+		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 3 secondes
+		return;
+	}
 
-	const libelle = await fetch("http://localhost:8080/api/tariflibelle/"+userInput).then(res=>res.json()).catch(error=>console.log("lerreru est ", error.message))
-
+	if (isNaN(+userInput) || userInput.length !== 10) {
+		setNotification("Nomenclature invalide! Veuillez entrer un nombre de 10 chiffres.");
+		setValue(undefined);
+		setTimeout(() => setNotification(""), 5000); // Auto close after 3 seconds
+	  } else {
+		setValue(+userInput);
+  
+		const libelle = await fetch("http://localhost:8080/api/tariflibelle/" + userInput)
+		  .then((res) => res.json())
+		  .catch((error) => console.log("l'erreur est ", error.message));
+	  }
    // console.log("le libelle est : ", libelle);
 	
 
@@ -221,7 +224,15 @@ function TarifSearch() {
 	console.log("Valeur calculée tauxda :", calculatedValuetauxda);
 	console.log("Valeur calculée tauxaib :", calculatedValuetauxaib);
 	console.log("Valeur calculée tauxtva :", calculatedValuetauxtva);
-  }
+ 
+	if (!userInput) {
+		setNotification("Veuillez entrer une nomenclature avant de calculer les droits.");
+		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 3 secondes
+		return;
+	}
+
+	}
+
 
    
 
@@ -231,6 +242,7 @@ function TarifSearch() {
 							
 	<div className="flex justify-center items-center h-full py-6">
 		<div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
+		{notification && <Notification message={notification} onClose={() => setNotification("")} />}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
 				<div className="flex flex-col space-y-2">
 					<label htmlFor="nomenclature" className="font-semibold">Nomenclature</label>

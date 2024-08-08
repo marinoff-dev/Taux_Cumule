@@ -1,25 +1,13 @@
 import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
-import { error } from "console";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { taux } from "@/utils/_constants"
+import Notification from "./Notification";
+
 
 import {
 	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
   
 } from "@/components/ui/table"
-import { Card, CardContent } from "@/components/ui/card";
-import { TableColumnsSplit } from "lucide-react";
-import { OK } from "zod";
-//import React, { useState, ChangeEvent } from 'react';
 function TarifSearch() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
@@ -49,7 +37,7 @@ function TarifSearch() {
   const [calculatedValuetauxda, setCalculatedValuetauxda] = useState<number | undefined>(undefined);
   const [calculatedValuetauxpcs, setCalculatedValuetauxpcs] = useState<number | undefined>(undefined);
 
-
+  const [notification, setNotification] = useState<string>("");
 // Recuperation des taux Linéaire 
 
 			const [da, setda] = useState<number>(0);
@@ -74,8 +62,6 @@ function TarifSearch() {
   const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
   const [isChecked, setIsChecked] = useState(false);
 
- 
-  //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
@@ -152,19 +138,24 @@ function TarifSearch() {
 	console.log("le userinput est :", userInput)
 	console.log("le userinput est :", typeof userInput)
 
-	setValue(+userInput);
+	if (!userInput) {
+		setNotification("Veuillez entrer une nomenclature avant de rechercher.");
+		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 3 secondes
+		return;
+	}
 
-	const libelle = await fetch("http://localhost:8080/api/tariflibelle/"+userInput).then(res=>res.json()).catch(error=>console.log("lerreru est ", error.message))
-
-   // console.log("le libelle est : ", libelle);
-	
-
-   /* if (isNaN(+userInput)) {
-
-	   setValue(+userInput);
-	} else {
-	  setValue(undefined);
-	}*/
+	if (isNaN(+userInput) || userInput.length !== 10) {
+		setNotification("Nomenclature invalide! Veuillez entrer un nombre de 10 chiffres.");
+		setValue(undefined);
+		setTimeout(() => setNotification(""), 5000); // Auto close after 3 seconds
+	  } else {
+		setValue(+userInput);
+  
+		const libelle = await fetch("http://localhost:8080/api/tariflibelle/" + userInput)
+		  .then((res) => res.json())
+		  .catch((error) => console.log("l'erreur est ", error.message));
+	  }
+  
 
 	
   }
@@ -228,6 +219,12 @@ function TarifSearch() {
 	console.log("Valeur calculée tauxda :", calculatedValuetauxda);
 	console.log("Valeur calculée tauxaib :", calculatedValuetauxaib);
 	console.log("Valeur calculée tauxtva :", calculatedValuetauxtva);
+
+	if (!userInput) {
+		setNotification("Veuillez entrer une nomenclature avant de calculer les droits.");
+		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 5 secondes
+		return;
+	}
   }
 
    
@@ -238,6 +235,7 @@ function TarifSearch() {
 							
 	<div className="flex justify-center items-center h-full py-6">
 		<div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
+		{notification && <Notification message={notification} onClose={() => setNotification("")} />}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
 				<div className="flex flex-col space-y-2">
 					<label htmlFor="nomenclature" className="font-semibold">Nomenclature</label>
@@ -297,7 +295,7 @@ function TarifSearch() {
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
-					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'}</h3>
+					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'} %</h3>
 				</div>
 			</div>
 
@@ -315,6 +313,10 @@ function TarifSearch() {
 							onChange={handleInputSimulateChange}
 							className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
 						/>
+					</div>
+					<div className="flex flex-col space-y-2">
+						<label htmlFor="simulateValue" className="font-semibold text-center">Devise étrangère</label>
+						<h3 className="text-black-400 font-bold text-center">XOF</h3>
 					</div>
 					<div className="flex flex-col space-y-2">
 						<button
@@ -364,11 +366,12 @@ function TarifSearch() {
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
-					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'}</h3>
+					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'} <span className="text-black text-xs">FCFA</span></h3>
 				</div>
 			</div>
 
 		</div>
+		
 	</div>
 
 
