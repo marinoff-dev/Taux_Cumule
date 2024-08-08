@@ -202,7 +202,7 @@ export const tarifswApi = createApi({
     updateAdherent: build.mutation<Tarifsw, Tarifsw>({
       query: (tarifsw: Tarifsw) => ({
         url: `/${tarifsw.id}`,
-        method: "PUT",
+        method: "GET",
         body: tarifsw,
       }),
       invalidatesTags: (result, error) => {
@@ -210,6 +210,7 @@ export const tarifswApi = createApi({
       },
     }),
   }),
+  
 });
 
 export const {
