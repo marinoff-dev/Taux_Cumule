@@ -350,7 +350,7 @@ function TarifSearch() {
 							{ label: 'DD', values: [dd, tauxdd, calculatedValuetauxdd] },
 							{ label: 'DA', values: [da, tauxda, calculatedValuetauxda] },
 							{ label: 'AIB', values: [aib, tauxaib, calculatedValuetauxaib] },
-							{ label: 'TVA', values: [tva, tauxtva, calculatedValuetauxtva] },
+							{ label: 'TVA', values: [tva, tauxtva.toFixed(2), calculatedValuetauxtva] },
 						].map(({ label, values }, index) => (
 							<tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
 								<td className="px-4 py-2 border border-gray-200">{label}</td>
