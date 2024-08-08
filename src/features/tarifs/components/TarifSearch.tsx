@@ -98,7 +98,7 @@ function TarifSearch() {
 	if (tauxData) {
 	  console.log("le taux récupéré sdcdcg:", tauxData);
 	  setTauxda(tauxData.tauxda);
-	  setTaux(tauxData.taux);
+	 // setTaux(tauxData.taux);
 	  setTauxaib(tauxData.tauxaib)
 	  setTauxtva(tauxData.tauxtva)
 	  setTauxrs(tauxData.tauxrs)
@@ -170,13 +170,18 @@ function TarifSearch() {
   }
 
   async function handleButtonClicktaux() {
-	try {
+	if(tauxData){
+		setTaux(tauxData.taux);
+
+	}
+ 	/* try {
 	  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
 	  console.log("le taux taux taux est : ", taux);
 	  setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
+	  
 	} catch (error) {
 	  console.log("Une erreur s'est produite lors de la récupération du taux :", error);
-	}
+	}*/
 	
   }
 
@@ -281,7 +286,10 @@ function TarifSearch() {
 				className="mt-8 md:mt-8 w-60 bg-blue-500
 				 text-white rounded-md py-2 px-4
 				 hover:bg-blue-600 focus:outline-none
-				 focus:bg-blue-600">
+				 focus:bg-blue-600"
+				 onClick={handleButtonClicktaux}
+				 
+				 >
 					Calculer
 				</button>
 			</div>
@@ -318,6 +326,7 @@ function TarifSearch() {
 					</div>
 				</div>
 			</form>
+			
 			<div className="overflow-x-auto py-5">
 				<Table className="table-auto w-full border-collapse border border-gray-200">
 					<thead className="bg-gray-200">
