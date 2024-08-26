@@ -28,7 +28,7 @@ type TarifswTaux = {
   tauxrau:number;
   tauxect:number;
   tauxdd:number;
-
+  isChecked: boolean; 
 
   // Autres propriétés...
 };
@@ -106,11 +106,11 @@ export const tarifswApi = createApi({
 
     
 
-    getTauxByNomenclature: build.query<TarifswTaux, number>({
+    getTauxByNomenclature: build.query<TarifswTaux, Array<number>>({
       
-      query: (nomenclature: number) =>{
+      query: ([nomenclature,isChecked]) =>{
         console.log("la nomenclature est :", nomenclature)
-        return `tarif/taux/${nomenclature}`
+        return `tarif/taux/${nomenclature}?isChecked=${isChecked}`
           
       },
       providesTags: (result, error) => {
@@ -125,6 +125,25 @@ export const tarifswApi = createApi({
         return error ? [] : [{ type: "tarifswtaux", nomenclature: result?.nomenclature }];
       },
     }),
+
+    /*getTauxByNomenclature: build.query<TarifswTaux, { nomenclature: number, isChecked: boolean }>({
+      query: ({ nomenclature, isChecked }) => {
+        console.log("La nomenclature est :", nomenclature);
+        console.log("Le statut du checkbox est :", isChecked);
+    
+        return {
+          url: `tarif/taux/${nomenclature}`,
+          params: { isChecked: isChecked },
+        };
+      },
+      providesTags: (result, error) => {
+        console.log(error);
+        console.log("Le résultat du taux est :");
+        console.log(result);
+    
+        return error ? [] : [{ type: "tarifswtaux", nomenclature: result?.nomenclature }];
+      },
+    }),*/
 
     getTauxCedeaoByNomenclature: build.query<TarifswTaux, number>({
       

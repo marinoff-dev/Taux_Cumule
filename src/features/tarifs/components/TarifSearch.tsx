@@ -57,15 +57,16 @@ function TarifSearch() {
   const [libelle, setLibelle] = useState<string>("");
   const [statut, setStatut] = useState<string>("");
   const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
-
-  const { data: tauxData , isError} = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
-  const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
   const [isChecked, setIsChecked] = useState(false);
 
+  const { data: tauxData , isError} = useGetTauxByNomenclatureQuery([(value !== undefined ? value : 0), (isChecked ? 1 : 0)]);
+  const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
 
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
-  };
+
+
+ const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(event.target.checked);
+};
 
   useEffect(() => {
 	if (libelleData) {
@@ -160,11 +161,15 @@ function TarifSearch() {
 	
   }
 
+
+ // Fonction qui renvoie le taux 
   async function handleButtonClicktaux() {
 	if(tauxData){
+
 		setTaux(tauxData.taux);
 
 	}
+
  	/* try {
 	  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
 	  console.log("le taux taux taux est : ", taux);
@@ -176,7 +181,47 @@ function TarifSearch() {
 	
   }
 
-  //metre a jour la valeur entrer dans le input pour calculer le montabt 
+
+  /*async function handleButtonClicktaux() {
+    if (isChecked) {
+        try {
+            const response = await fetch('http://localhost:8080/api/tarif/checkbox', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ isChecked })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const message = data.message; // Extraire le message de la réponse JSON
+
+                let tauxData: number = 0; // Initialiser tauxData avec une valeur par défaut de type number
+
+                if (typeof data.taux !== 'undefined') {
+                    tauxData = data.taux;
+                }
+
+                // Traiter le message renvoyé par le backend
+                if (message === "Checkbox coché" || message === "Checkbox non coché") {
+                    setTaux(tauxData); // Utiliser tauxData pour définir le taux
+                } else {
+                    // Gérer d'autres cas si nécessaire
+                }
+            } else {
+                console.error('Erreur lors de la requête au backend');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la requête au backend:', error);
+        }
+    } else {
+        console.log('Le checkbox n\'est pas coché');
+    }
+}*/
+
+
+  //metre a jour la valeur entrer dans le input pour calculer le montant 
   function handleInputSimulateChange(event: React.ChangeEvent<HTMLInputElement>) {
 	setSimulateValue(parseFloat(event.target.value.trim()));
   }
