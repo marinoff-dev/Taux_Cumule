@@ -64,40 +64,40 @@ function TarifSearch() {
 
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
+	setIsChecked(e.target.checked);
   };
 
   useEffect(() => {
 	if (libelleData) {
-	  console.log("Libellé récupéré :", libelleData);
-	  setLibelle(libelleData.libelle);
-	  setStatut(libelleData.statut);
-	   
+		console.log("Libellé récupéré :", libelleData);
+		setLibelle(libelleData.libelle);
+		setStatut(libelleData.statut);
+   
 	}
 	else{
-	  console.log("Libellé récupéré :", libelleData);
+		console.log("Libellé récupéré :", libelleData);
 	}
   }, [libelleData]);
 
 
   useEffect(() => {
 	if (tauxData) {
-	  console.log("le taux récupéré sdcdcg:", tauxData);
-	  setTauxda(tauxData.tauxda);
-	 // setTaux(tauxData.taux);
-	  setTauxaib(tauxData.tauxaib)
-	  setTauxtva(tauxData.tauxtva)
-	  setTauxrs(tauxData.tauxrs)
-	  setTauxps(tauxData.tauxps)
-	  setTauxpc(tauxData.tauxpc)
-	  setTauxpcs(tauxData.tauxpcs)
-	  setTauxrau(tauxData.tauxrau)
-	  setTauxect(tauxData.tauxect)
-	  setTauxdd(tauxData.tauxdd)
+		console.log("le taux récupéré sdcdcg:", tauxData);
+		setTauxda(tauxData.tauxda);
+		// setTaux(tauxData.taux);
+		setTauxaib(tauxData.tauxaib)
+		setTauxtva(tauxData.tauxtva)
+		setTauxrs(tauxData.tauxrs)
+		setTauxps(tauxData.tauxps)
+		setTauxpc(tauxData.tauxpc)
+		setTauxpcs(tauxData.tauxpcs)
+		setTauxrau(tauxData.tauxrau)
+		setTauxect(tauxData.tauxect)
+		setTauxdd(tauxData.tauxdd)
 
 	}
 	else{
-	  console.log("le taux récupéré hvdcsh:", tauxData);
+		console.log("le taux récupéré hvdcsh:", tauxData);
 	}
   }, [tauxData]);
 
@@ -105,21 +105,21 @@ function TarifSearch() {
 
   useEffect(() => {
 	if (tauxLineaireData) {
-	  console.log("le taux récupéré sdcdcg:", tauxLineaireData);
-	  setda(tauxLineaireData.da);
-	  setaib(tauxLineaireData.aib)
-	  settva(tauxLineaireData.tva)
-	  setrs(tauxLineaireData.rs)
-	  setps(tauxLineaireData.ps)
-	  setpc(tauxLineaireData.pc)
-	  setpcs(tauxLineaireData.pcs)
-	  setrau(tauxLineaireData.rau)
-	  setect(tauxLineaireData.ect)
-	  setdd(tauxLineaireData.dd)
+		console.log("le taux récupéré sdcdcg:", tauxLineaireData);
+		setda(tauxLineaireData.da);
+		setaib(tauxLineaireData.aib)
+		settva(tauxLineaireData.tva)
+		setrs(tauxLineaireData.rs)
+		setps(tauxLineaireData.ps)
+		setpc(tauxLineaireData.pc)
+		setpcs(tauxLineaireData.pcs)
+		setrau(tauxLineaireData.rau)
+		setect(tauxLineaireData.ect)
+		setdd(tauxLineaireData.dd)
 
 	}
 	else{
-	  console.log("le taux récupéré hvdcsh:", tauxData);
+		console.log("le taux récupéré hvdcsh:", tauxData);
 	}
   }, [tauxLineaireData]);
 
@@ -130,7 +130,7 @@ function TarifSearch() {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
 	setUserInput(event.target.value.trim());
-	  
+  
   }
 
   async function handleButtonClick() {
@@ -148,13 +148,13 @@ function TarifSearch() {
 		setNotification("Nomenclature invalide! Veuillez entrer un nombre de 10 chiffres.");
 		setValue(undefined);
 		setTimeout(() => setNotification(""), 5000); // Auto close after 3 seconds
-	  } else {
+	} else {
 		setValue(+userInput);
   
 		const libelle = await fetch("http://localhost:8080/api/tariflibelle/" + userInput)
-		  .then((res) => res.json())
-		  .catch((error) => console.log("l'erreur est ", error.message));
-	  }
+			.then((res) => res.json())
+			.catch((error) => console.log("l'erreur est ", error.message));
+	}
   
 
 	
@@ -165,7 +165,7 @@ function TarifSearch() {
 		setTaux(tauxData.taux);
 
 	}
- 	/* try {
+	/* try {
 	  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
 	  console.log("le taux taux taux est : ", taux);
 	  setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
@@ -285,9 +285,8 @@ function TarifSearch() {
 				 text-white rounded-md py-2 px-4
 				 hover:bg-blue-600 focus:outline-none
 				 focus:bg-blue-600"
-				 onClick={handleButtonClicktaux}
-				 
-				 >
+					onClick={handleButtonClicktaux}
+				>
 					Calculer
 				</button>
 			</div>
@@ -295,7 +294,9 @@ function TarifSearch() {
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
-					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'} %</h3>
+					<h3 className="text-red-500 font-bold text-center">
+						{taux !== undefined ? taux.toFixed(2) : 'N/A'} %
+					</h3>
 				</div>
 			</div>
 
