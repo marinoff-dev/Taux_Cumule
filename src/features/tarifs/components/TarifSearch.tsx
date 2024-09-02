@@ -274,9 +274,7 @@ function TarifSearch() {
    
 
   return (
-
-									
-							
+						
 	<div className="flex justify-center items-center h-full py-6">
 		<div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
 		{notification && <Notification message={notification} onClose={() => setNotification("")} />}
@@ -418,10 +416,6 @@ function TarifSearch() {
 		</div>
 		
 	</div>
-
-
-	
-
 	
   );
 }
