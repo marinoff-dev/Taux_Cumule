@@ -38,6 +38,7 @@ function TarifSearch() {
   const [calculatedValuetauxpcs, setCalculatedValuetauxpcs] = useState<number | undefined>(undefined);
 
   const [notification, setNotification] = useState<string>("");
+  const [selectedCurrency, setSelectedCurrency] = useState<string>('XOF');
 // Recuperation des taux Linéaire 
 
 			const [da, setda] = useState<number>(0);
@@ -63,6 +64,11 @@ function TarifSearch() {
   const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
 
 
+
+  const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCurrency = event.target.value;
+    setSelectedCurrency(selectedCurrency);
+  };
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
@@ -141,14 +147,14 @@ function TarifSearch() {
 
 	if (!userInput) {
 		setNotification("Veuillez entrer une nomenclature avant de rechercher.");
-		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 3 secondes
+		setTimeout(() => setNotification(""), 10000); // Fermeture automatique après 3 secondes
 		return;
 	}
 
 	if (isNaN(+userInput) || userInput.length !== 10) {
 		setNotification("Nomenclature invalide! Veuillez entrer un nombre de 10 chiffres.");
 		setValue(undefined);
-		setTimeout(() => setNotification(""), 5000); // Auto close after 3 seconds
+		setTimeout(() => setNotification(""), 10000); // Auto close after 3 seconds
 	} else {
 		setValue(+userInput);
   
@@ -168,7 +174,11 @@ function TarifSearch() {
 
 		setTaux(tauxData.taux);
 
-	}
+	} else {
+		setNotification("Veuillez d'abord entrer une nomenclature");
+		setTimeout(() => setNotification(""), 10000); // Fermeture automatique après 5 secondes
+	  }
+	
  	/* try {
 	  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
 	  console.log("le taux taux taux est : ", taux);
@@ -266,10 +276,17 @@ function TarifSearch() {
 
 	if (!userInput) {
 		setNotification("Veuillez entrer une nomenclature avant de calculer les droits.");
-		setTimeout(() => setNotification(""), 5000); // Fermeture automatique après 5 secondes
+		setTimeout(() => setNotification(""), 10000); // Fermeture automatique après 5 secondes
 		return;
 	}
+	if (!simulateValue) {
+		setNotification("Veuillez entrer une valeur pour la simulation");
+		setTimeout(() => setNotification(""), 10000); // Fermeture automatique après 5 secondes
+		return;
+	  }
+	
   }
+
 
    
 
@@ -359,7 +376,28 @@ function TarifSearch() {
 					</div>
 					<div className="flex flex-col space-y-2">
 						<label htmlFor="simulateValue" className="font-semibold text-center">Devise étrangère</label>
-						<h3 className="text-black-400 font-bold text-center">XOF</h3>
+						<select
+							id="simulateValue"
+							className="text-black-400 font-bold text-center border border-gray-300 rounded-md p-2"
+							onChange={handleCurrencyChange}
+							value={selectedCurrency} // Lié à l'état
+							>
+							<option value="XOF">FCFA</option>
+							<option value="USD">Dollar us</option>
+							<option value="GBP">Livre sterling</option>
+							<option value="JPY">Yen japonais</option>
+							<option value="CHF">Franc suisse</option>
+							<option value="CAD">Dollar canadien</option>
+							<option value="CNY">Yuan chinois</option>
+							<option value="INR">Roupie Indienne</option>
+							<option value="DTS">DTS du FMI</option>
+							<option value="NGN">Naira</option>
+							<option value="GHS">Cedi ghaneen</option>
+							<option value="GMD">Dalasi gambien</option>
+							<option value="GNF">Franc guineen</option>
+							<option value="PHP">Peso Philippin</option>
+							
+      					</select>
 					</div>
 					<div className="flex flex-col space-y-2">
 						<button
@@ -407,9 +445,12 @@ function TarifSearch() {
 			</div>
 
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
-				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
-					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>
-					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'} <span className="text-black text-xs">FCFA</span></h3>
+				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 arrondi-md w-full">
+					<label htmlFor="totalTaux" className="font-semibold text-center">Montant </label>
+					<h3 className="text-red-500 font-bold text-center">
+						{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'} &nbsp;
+						<span className="text-black text-xs">FCFA</span>
+					</h3>
 				</div>
 			</div>
 
