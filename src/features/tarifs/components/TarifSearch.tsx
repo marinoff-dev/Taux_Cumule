@@ -24,8 +24,8 @@ function TarifSearch() {
   const [tauxaib, setTauxaib] = useState<number>(0);
 
  //recupere le montant demander a calutuler et des taux
-  const [simulateValue, setSimulateValue] = useState<number | undefined>(undefined);
-  const [calculatedValue, setCalculatedValue] = useState<number | undefined>(undefined);
+ const [simulateValue, setSimulateValue] = useState<string>('');
+ const [calculatedValue, setCalculatedValue] = useState<number | undefined>(undefined);
   const [calculatedValuetauxrs, setCalculatedValuetauxrs] = useState<number | undefined>(undefined);
   const [calculatedValuetauxps, setCalculatedValuetauxps] = useState<number | undefined>(undefined);
   const [calculatedValuetauxpc, setCalculatedValuetauxpc] = useState<number | undefined>(undefined);
@@ -62,7 +62,12 @@ function TarifSearch() {
   const { data: tauxData , isError} = useGetTauxByNomenclatureQuery([(value !== undefined ? value : 0), (isChecked ? 1 : 0)]);
   const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
 
+// initialisé l'etat qui stock la devise 
+const [selectedCurrency, setSelectedCurrency] = useState<string>('XOF');
 
+const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	setSelectedCurrency(event.target.value);
+};
 
  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
@@ -220,26 +225,128 @@ function TarifSearch() {
     }
 }*/
 
-
   //metre a jour la valeur entrer dans le input pour calculer le montant 
-  function handleInputSimulateChange(event: React.ChangeEvent<HTMLInputElement>) {
-	setSimulateValue(parseFloat(event.target.value.trim()));
-  }
-
+ 
+  const handleInputSimulateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSimulateValue(event.target.value);
+  };
 
   function handleSimulateSubmit(event: React.FormEvent<HTMLFormElement>) {
 	event.preventDefault();
-	const calculatedValue = simulateValue !== undefined ? Number(((simulateValue * taux)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxrs = simulateValue !== undefined ? Number(((simulateValue * tauxrs)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxps = simulateValue !== undefined ? Number(((simulateValue * tauxps)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxpc = simulateValue !== undefined ? Number(((simulateValue * tauxpc)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxpcs = simulateValue !== undefined ? Number(((simulateValue * tauxpcs)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxrau = simulateValue !== undefined ? Number(((simulateValue * tauxrau)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxect = simulateValue !== undefined ? Number(((simulateValue * tauxect)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxdd = simulateValue !== undefined ? Number(((simulateValue * tauxdd)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxda = simulateValue !== undefined ? Number(((simulateValue * tauxda)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxaib = simulateValue !== undefined ? Number(((simulateValue * tauxaib)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxtva = simulateValue !== undefined ? Number(((simulateValue * tauxtva)/100).toFixed(2)) : undefined;
+ 
+	
+	// Taux de change par rapport à USD
+				const exchangeRates: {
+					[key: string]: number;
+				} = {
+					XOF: 1, // Exemple de taux de change
+					EUR: 1, // Exemple de taux de change
+					USD: 600,   // Exemple de taux de change
+					JPY: 650,// Exemple de taux de change
+					CHF: 1, // Exemple de taux de change
+					CAD: 600,   // Exemple de taux de change
+					CNY: 650 ,
+					INR: 1, // Exemple de taux de change
+					DTS: 600,   // Exemple de taux de change
+					NGN: 650,
+					GHS: 1, // Exemple de taux de change
+					GMD: 600,   // Exemple de taux de change
+					GNF: 650,//exemple de taux de change 
+					PHP: 1 // Exemple de taux de change
+					   
+				};
+				
+ 	
+			// Vérifier si simulateValue est défini
+			
+			
+
+			const simulateValueAsString: string = simulateValue.toString(); // Convertir simulateValue en une chaîne de caractères
+			
+			const simulateValueNumber: number = parseFloat(simulateValue);
+				
+			
+			if (isNaN(simulateValueNumber)) {
+				console.error('La valeur saisie n\'est pas un nombre valide.');
+				return;
+			}
+				
+			// Convertir le montant saisi dans la devise sélectionnée
+			const exchangeRate = exchangeRates[selectedCurrency];
+			const amountInSelectedCurrency = simulateValueNumber ;
+			console.log("Valeur du simulateValue est  :", simulateValue);
+			console.log("Valeur du exchangeRate est  :", exchangeRate);
+
+
+			console.log("Valeur du amountInSelectedCurrency est  :", amountInSelectedCurrency);
+
+			// Calcul des droits et taxes en fonction de la devise sélectionnée
+			let calculatedValue1;
+
+			switch (selectedCurrency) {
+				case 'XOF':
+					calculatedValue1 = amountInSelectedCurrency * 1; // Exemple de calcul pour XOF
+					break;
+				case 'EUR':
+					calculatedValue1 = amountInSelectedCurrency * 655,957; // Exemple de calcul pour XOF
+					break;
+				case 'USD':
+					calculatedValue1 = amountInSelectedCurrency * 606,690; // Exemple de calcul pour USD
+					break;
+				case 'GBP':
+					calculatedValue1 = amountInSelectedCurrency * 766,660; // Exemple de calcul pour EUR
+					break;
+				case 'JPY':
+					calculatedValue1 = amountInSelectedCurrency * 3,890; // Exemple de calcul pour EUR
+					break;
+				case 'CHF':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'CAD':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'CNY':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'INR':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'DTS':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'NGN':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'GHS':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+
+				case 'GMD':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'GNF':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				case 'PHP':
+						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						break;
+				// Ajoutez des cas pour d'autres devises si nécessaire
+				default:
+					calculatedValue1 = 0;
+			}
+
+
+	const calculatedValue = calculatedValue1 !== undefined ? Number(((calculatedValue1 * taux)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxrs = simulateValue !== undefined ? Number(((calculatedValue1 * tauxrs)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxps = simulateValue !== undefined ? Number(((calculatedValue1 * tauxps)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxpc = simulateValue !== undefined ? Number(((calculatedValue1 * tauxpc)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxpcs = simulateValue !== undefined ? Number(((calculatedValue1 * tauxpcs)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxrau = simulateValue !== undefined ? Number(((calculatedValue1 * tauxrau)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxect = simulateValue !== undefined ? Number(((calculatedValue1 * tauxect)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxdd = simulateValue !== undefined ? Number(((calculatedValue1 * tauxdd)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxda = simulateValue !== undefined ? Number(((calculatedValue1 * tauxda)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxaib = simulateValue !== undefined ? Number(((calculatedValue1 * tauxaib)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxtva = simulateValue !== undefined ? Number(((calculatedValue1 * tauxtva)/100).toFixed(2)) : undefined;
 	setCalculatedValue(calculatedValue);
 	setCalculatedValuetauxrs(calculatedValuetauxrs);
 	setCalculatedValuetauxpc(calculatedValuetauxpc);
@@ -361,7 +468,28 @@ function TarifSearch() {
 					</div>
 					<div className="flex flex-col space-y-2">
 						<label htmlFor="simulateValue" className="font-semibold text-center">Devise étrangère</label>
-						<h3 className="text-black-400 font-bold text-center">XOF</h3>
+						<select
+							id="currency"
+							value={selectedCurrency}
+							onChange={handleCurrencyChange}
+							className="text-black-400 font-bold text-center border border-gray-300 rounded-md p-2"						>
+							<option value="XOF">FCFA</option>
+							<option value="EUR">EURO</option>
+							<option value="USD">Dollar us</option>
+							<option value="GBP">Livre sterling</option>
+							<option value="JPY">Yen japonais</option>
+							<option value="CHF">Franc suisse</option>
+							<option value="CAD">Dollar canadien</option>
+							<option value="CNY">Yuan chinois</option>
+							<option value="INR">Roupie Indienne</option>
+							<option value="DTS">DTS du FMI</option>
+							<option value="NGN">Naira</option>
+							<option value="GHS">Cedi ghaneen</option>
+							<option value="GMD">Dalasi gambien</option>
+							<option value="GNF">Franc guineen</option>
+							<option value="PHP">Peso Philippin</option>
+							{/* Ajoutez d'autres devises selon vos besoins */}
+						</select>
 					</div>
 					<div className="flex flex-col space-y-2">
 						<button

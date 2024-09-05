@@ -1,7 +1,6 @@
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent} from "@/components/ui/card";
 import { User, Globe, BadgePercent, Plus } from "lucide-react";
-import { Bar } from 'react-chartjs-2';
 
 import React, { useState , useEffect } from "react";
 
