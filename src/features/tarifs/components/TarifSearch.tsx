@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
@@ -169,7 +170,7 @@ function TarifSearch() {
 		setTaux(tauxData.taux);
 
 	}
- 	/* try {
+/* try {
 	  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
 	  console.log("le taux taux taux est : ", taux);
 	  setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
@@ -341,9 +342,8 @@ function TarifSearch() {
 					</h3>
 				</div>
 			</div>
-
-
-
+			
+			
 			<form onSubmit={handleSimulateSubmit}>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
 					<div className="flex flex-col space-y-2">
