@@ -176,7 +176,7 @@ function TarifSearch() {
 		setTaux(tauxData.taux);
 
 	}
- 	/* try {
+	/* try {
 	  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
 	  console.log("le taux taux taux est : ", taux);
 	  setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
@@ -280,7 +280,7 @@ function TarifSearch() {
 		setNotification("Veuillez entrer une valeur pour la simulation");
 		setTimeout(() => setNotification(""), 10000); // Fermeture automatique après 5 secondes
 		return;
-	  }
+	}
 	
   }
 
@@ -393,7 +393,7 @@ function TarifSearch() {
 							<option value="GNF">Franc guineen</option>
 							<option value="PHP">Peso Philippin</option>
 							
-      					</select>
+				</select>
 					</div>
 					<div className="flex flex-col space-y-2">
 						<button
