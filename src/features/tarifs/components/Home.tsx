@@ -2,27 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, Globe, BadgePercent, Plus } from "lucide-react";
-<<<<<<< HEAD
-=======
+
+
 import MyBarChart from "@/features/tarifs/components/GrapheBar";
 import { useGetTauxByNomenclatureQuery } from "@/services/index";
->>>>>>> 3abc3366cb4a3e9f8358b5ced19d2e1c1fd94f20
+
 
 const Home: React.FC = () => {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
   const [counter, setCounter] = useState<number>(0);
 
-  const { data: tauxData, isError } = useGetTauxByNomenclatureQuery(value !== undefined ? value : 0);
 
-  useEffect(() => {
-    if (tauxData) {
-      console.log("le taux récupéré sdcdcg:", tauxData);
-      setCounter(tauxData.counter);
-    } else {
-      console.log("le taux récupéré hvdcsh:", tauxData);
-    }
-  }, [tauxData]);
+ 
 
   async function handleButtonClicktaux() {
     try {
@@ -59,7 +51,6 @@ const Home: React.FC = () => {
               </Avatar>
               <div className="grid gap-1">
                 <p className="text-lg font-medium">Nombre d'utilisation de l'application</p>
-                <h3 className="text-blue-500 font-bold">{tauxData?.counter || 'N/A'}</h3>
               </div>
             </div>
           </CardContent>
