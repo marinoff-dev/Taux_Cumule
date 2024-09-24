@@ -3,14 +3,16 @@ import React, { useState, useEffect } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, Globe, BadgePercent, Plus } from "lucide-react";
+
+
 import MyBarChart from "@/features/tarifs/components/GrapheBar";
 import { useGetTauxByNomenclatureQuery } from "@/services/index";
+
 
 const Home: React.FC = () => {
 const [value, setValue] = useState<number | undefined>(undefined);
 const [userInput, setUserInput] = useState<string>("");
 const [counter, setCounter] = useState<number>(0);
-
 
 
  
