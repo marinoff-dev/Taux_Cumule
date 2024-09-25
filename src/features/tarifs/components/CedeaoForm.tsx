@@ -54,13 +54,13 @@ function TarifSearch() {
 
 
 
-  const [libelle, setLibelle] = useState<string>("");
-  const [statut, setStatut] = useState<string>("");
-  const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
+const [libelle, setLibelle] = useState<string>("");
+const [statut, setStatut] = useState<string>("");
+const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
 
-  const { data: tauxData , isError} = useGetTauxCedeaoByNomenclatureQuery(value !== undefined ? value : 0);
-  const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
-  const [isChecked, setIsChecked] = useState(false);
+const { data: tauxData , isError} = useGetTauxCedeaoByNomenclatureQuery(value !== undefined ? value : 0);
+const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
+const [isChecked, setIsChecked] = useState(false);
  
 
   //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
@@ -72,34 +72,34 @@ function TarifSearch() {
 
   useEffect(() => {
 	if (libelleData) {
-	  console.log("Libellé récupéré :", libelleData);
-	  setLibelle(libelleData.libelle);
-	  setLibelle(libelleData.statut);
+		console.log("Libellé récupéré :", libelleData);
+		setLibelle(libelleData.libelle);
+		setLibelle(libelleData.statut);
 	}
 	else{
-	  console.log("Libellé récupéré :", libelleData);
+	console.log("Libellé récupéré :", libelleData);
 	}
   }, [libelleData]);
 
 
   useEffect(() => {
 	if (tauxData) {
-	  console.log("le taux récupéré sdcdcg:", tauxData);
-	  setTauxda(tauxData.tauxda);
-	  setTaux(tauxData.taux);
-	  setTauxaib(tauxData.tauxaib)
-	  setTauxtva(tauxData.tauxtva)
-	  setTauxrs(tauxData.tauxrs)
-	  setTauxps(tauxData.tauxps)
-	  setTauxpc(tauxData.tauxpc)
-	  setTauxpcs(tauxData.tauxpcs)
-	  setTauxrau(tauxData.tauxrau)
-	  setTauxect(tauxData.tauxect)
-	  setTauxdd(tauxData.tauxdd)
+		console.log("le taux récupéré sdcdcg:", tauxData);
+		setTauxda(tauxData.tauxda);
+		setTaux(tauxData.taux);
+		setTauxaib(tauxData.tauxaib)
+		setTauxtva(tauxData.tauxtva)
+		setTauxrs(tauxData.tauxrs)
+		setTauxps(tauxData.tauxps)
+		setTauxpc(tauxData.tauxpc)
+		setTauxpcs(tauxData.tauxpcs)
+		setTauxrau(tauxData.tauxrau)
+		setTauxect(tauxData.tauxect)
+		setTauxdd(tauxData.tauxdd)
 
 	}
 	else{
-	  console.log("le taux récupéré hvdcsh:", tauxData);
+		console.log("le taux récupéré hvdcsh:", tauxData);
 	}
   }, [tauxData]);
 
@@ -107,21 +107,21 @@ function TarifSearch() {
 
   useEffect(() => {
 	if (tauxLineaireData) {
-	  console.log("le taux récupéré sdcdcg:", tauxLineaireData);
-	  setda(tauxLineaireData.da);
-	  setaib(tauxLineaireData.aib)
-	  settva(tauxLineaireData.tva)
-	  setrs(tauxLineaireData.rs)
-	  setps(tauxLineaireData.ps)
-	  setpc(tauxLineaireData.pc)
-	  setpcs(tauxLineaireData.pcs)
-	  setrau(tauxLineaireData.rau)
-	  setect(tauxLineaireData.ect)
-	  setdd(tauxLineaireData.dd)
+	console.log("le taux récupéré sdcdcg:", tauxLineaireData);
+	setda(tauxLineaireData.da);
+	setaib(tauxLineaireData.aib)
+	settva(tauxLineaireData.tva)
+	setrs(tauxLineaireData.rs)
+	setps(tauxLineaireData.ps)
+	setpc(tauxLineaireData.pc)
+	setpcs(tauxLineaireData.pcs)
+	setrau(tauxLineaireData.rau)
+	setect(tauxLineaireData.ect)
+	setdd(tauxLineaireData.dd)
 
 	}
 	else{
-	  console.log("le taux récupéré hvdcsh:", tauxData);
+		console.log("le taux récupéré hvdcsh:", tauxData);
 	}
   }, [tauxLineaireData]);
 
@@ -132,7 +132,7 @@ function TarifSearch() {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
 	setUserInput(event.target.value.trim());
-	  
+  
   }
 
   async function handleButtonClick() {
@@ -150,13 +150,13 @@ function TarifSearch() {
 		setNotification("Nomenclature invalide! Veuillez entrer un nombre de 10 chiffres.");
 		setValue(undefined);
 		setTimeout(() => setNotification(""), 5000); // Auto close after 3 seconds
-	  } else {
+	} else {
 		setValue(+userInput);
   
 		const libelle = await fetch("http://localhost:8080/api/tariflibelle/" + userInput)
-		  .then((res) => res.json())
-		  .catch((error) => console.log("l'erreur est ", error.message));
-	  }
+			.then((res) => res.json())
+			.catch((error) => console.log("l'erreur est ", error.message));
+	}
    // console.log("le libelle est : ", libelle);
 	
 
@@ -172,11 +172,11 @@ function TarifSearch() {
 
   async function handleButtonClicktaux() {
 	try {
-	  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
-	  console.log("le taux taux taux est : ", taux);
-	  setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
+		const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
+		console.log("le taux taux taux est : ", taux);
+		setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
 	} catch (error) {
-	  console.log("Une erreur s'est produite lors de la récupération du taux :", error);
+		console.log("Une erreur s'est produite lors de la récupération du taux :", error);
 	}
 	
   }
