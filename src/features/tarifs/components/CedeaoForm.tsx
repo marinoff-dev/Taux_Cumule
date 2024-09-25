@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxCedeaoByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
@@ -54,15 +55,21 @@ function TarifSearch() {
 
 
 
-const [libelle, setLibelle] = useState<string>("");
-const [statut, setStatut] = useState<string>("");
-const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
+  const [libelle, setLibelle] = useState<string>("");
+  const [statut, setStatut] = useState<string>("");
+  const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
+  const [isChecked, setIsChecked] = useState(false);
 
-const { data: tauxData , isError} = useGetTauxCedeaoByNomenclatureQuery(value !== undefined ? value : 0);
-const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
-const [isChecked, setIsChecked] = useState(false);
+  const { data: tauxData , isError} = useGetTauxCedeaoByNomenclatureQuery(value !== undefined ? value : 0);
+  const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
+  
+  // initialisé l'etat qui stock la devise 
+const [selectedCurrency, setSelectedCurrency] = useState<string>('XOF');
+
+const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	setSelectedCurrency(event.target.value);
+};
  
-
   //console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +84,7 @@ const [isChecked, setIsChecked] = useState(false);
 		setLibelle(libelleData.statut);
 	}
 	else{
-	console.log("Libellé récupéré :", libelleData);
+		console.log("Libellé récupéré :", libelleData);
 	}
   }, [libelleData]);
 
@@ -86,7 +93,7 @@ const [isChecked, setIsChecked] = useState(false);
 	if (tauxData) {
 		console.log("le taux récupéré sdcdcg:", tauxData);
 		setTauxda(tauxData.tauxda);
-		setTaux(tauxData.taux);
+		// setTaux(tauxData.taux);
 		setTauxaib(tauxData.tauxaib)
 		setTauxtva(tauxData.tauxtva)
 		setTauxrs(tauxData.tauxrs)
@@ -107,17 +114,17 @@ const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
 	if (tauxLineaireData) {
-	console.log("le taux récupéré sdcdcg:", tauxLineaireData);
-	setda(tauxLineaireData.da);
-	setaib(tauxLineaireData.aib)
-	settva(tauxLineaireData.tva)
-	setrs(tauxLineaireData.rs)
-	setps(tauxLineaireData.ps)
-	setpc(tauxLineaireData.pc)
-	setpcs(tauxLineaireData.pcs)
-	setrau(tauxLineaireData.rau)
-	setect(tauxLineaireData.ect)
-	setdd(tauxLineaireData.dd)
+		console.log("le taux récupéré sdcdcg:", tauxLineaireData);
+		setda(tauxLineaireData.da);
+		setaib(tauxLineaireData.aib)
+		settva(tauxLineaireData.tva)
+		setrs(tauxLineaireData.rs)
+		setps(tauxLineaireData.ps)
+		setpc(tauxLineaireData.pc)
+		setpcs(tauxLineaireData.pcs)
+		setrau(tauxLineaireData.rau)
+		setect(tauxLineaireData.ect)
+		setdd(tauxLineaireData.dd)
 
 	}
 	else{
@@ -132,8 +139,7 @@ const [isChecked, setIsChecked] = useState(false);
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
 	setUserInput(event.target.value.trim());
-  
-  }
+}
 
   async function handleButtonClick() {
 	//const parsedValue = parseInt(userInput, 10);
@@ -171,13 +177,16 @@ const [isChecked, setIsChecked] = useState(false);
   }
 
   async function handleButtonClicktaux() {
-	try {
-		const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
-		console.log("le taux taux taux est : ", taux);
-		setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
-	} catch (error) {
-		console.log("Une erreur s'est produite lors de la récupération du taux :", error);
+	if (tauxData){
+		setTaux(tauxData.taux)
 	}
+	// try {
+	// 	const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
+	// 	console.log("le taux taux taux est : ", taux);
+	// 	setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
+	// } catch (error) {
+	// 	console.log("Une erreur s'est produite lors de la récupération du taux :", error);
+	// }
 	
   }
 
@@ -234,11 +243,7 @@ const [isChecked, setIsChecked] = useState(false);
 	}
 
 
-   
-
-  return (
-
-									
+  return (							
 							
 	<div className="flex justify-center items-center h-full py-6">
 		<div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
@@ -286,7 +291,17 @@ const [isChecked, setIsChecked] = useState(false);
 						)}
 					</div>
 				</div>
+				<button
+				className="mt-8 md:mt-8 w-60 bg-blue-500
+				 text-white rounded-md py-2 px-4
+				 hover:bg-blue-600 focus:outline-none
+				 focus:bg-blue-600"
+					onClick={handleButtonClicktaux}
+				>
+					Calculer
+				</button>
 			</div>
+
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
@@ -308,6 +323,31 @@ const [isChecked, setIsChecked] = useState(false);
 							onChange={handleInputSimulateChange}
 							className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
 						/>
+					</div>
+					<div className="flex flex-col space-y-2">
+						<label htmlFor="simulateValue" className="font-semibold text-center">Devise étrangère</label>
+						<select
+							id="currency"
+							value={selectedCurrency}
+							onChange={handleCurrencyChange}
+							className="text-black-400 font-bold text-center border border-gray-300 rounded-md p-2"						>
+							<option value="XOF">FCFA</option>
+							<option value="EUR">EURO</option>
+							<option value="USD">Dollar us</option>
+							<option value="GBP">Livre sterling</option>
+							<option value="JPY">Yen japonais</option>
+							<option value="CHF">Franc suisse</option>
+							<option value="CAD">Dollar canadien</option>
+							<option value="CNY">Yuan chinois</option>
+							<option value="INR">Roupie Indienne</option>
+							<option value="DTS">DTS du FMI</option>
+							<option value="NGN">Naira</option>
+							<option value="GHS">Cedi ghaneen</option>
+							<option value="GMD">Dalasi gambien</option>
+							<option value="GNF">Franc guineen</option>
+							<option value="PHP">Peso Philippin</option>
+							{/* Ajoutez d'autres devises selon vos besoins */}
+						</select>
 					</div>
 					<div className="flex flex-col space-y-2">
 						<button

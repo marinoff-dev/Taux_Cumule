@@ -2,7 +2,7 @@ import { Tarifsw } from "@/pages/Tarif";
 import { TARIFSW_URL } from "@/utils/_constants";
 import { getAccessToken } from "@/utils/_helpers";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { isNaN } from "lodash";
+//import { isNaN } from "lodash";
 
 
  

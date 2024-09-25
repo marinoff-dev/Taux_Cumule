@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxUemoaByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
@@ -54,6 +56,7 @@ function UemoaForm() {
   
   
   
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [libelle, setLibelle] = useState<string>("");
 	const [statut, setStatut] = useState<string>("");
 	const { data: libelleData, isLoading, refetch } = useGetTarifswByNomenclatureQuery(value !== undefined ? value : 0);
@@ -62,7 +65,12 @@ function UemoaForm() {
 	const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
 	const [isChecked, setIsChecked] = useState(false);
  
-
+	// initialisé l'etat qui stock la devise 
+	const [selectedCurrency, setSelectedCurrency] = useState<string>('XOF');
+	
+	const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setSelectedCurrency(event.target.value);
+	}
 	//console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
   
 	const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -167,19 +175,26 @@ function UemoaForm() {
 		setValue(undefined);
 	  }*/
   
-		
-		}
+	  
+	}
+  
+	// Fonction qui renvoie le taux 
+	async function handleButtonClicktaux() {
+		if(tauxData){
 	
-		async function handleButtonClicktaux() {
-		try {
-			const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
-			console.log("le taux taux taux est : ", taux);
-			setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
+			setTaux(tauxData.taux);
+	
+		}
+	/* try {
+		  const taux = await fetch("http://localhost:8080/api/tarif/taux/" + userInput).then(res => res.json()).catch(error => console.log("lerreru est ", error.message));
+		  console.log("le taux taux taux est : ", taux);
+		  setTaux(taux); // Mettre à jour l'état taux avec la valeur récupérée
+		  
 		} catch (error) {
-			console.log("Une erreur s'est produite lors de la récupération du taux :", error);
-		}
+		  console.log("Une erreur s'est produite lors de la récupération du taux :", error);
+		}*/
 		
-		}
+	  }
   
 	//metre a jour la valeur entrer dans le input pour calculer le montabt 
 	function handleInputSimulateChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -231,42 +246,44 @@ function UemoaForm() {
 		return;
 	}
 
-		}
-	
-		
-	
-		return (
-	
-										
-								
-		<div className="flex justify-center items-center h-full py-6">
-			<div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
-			{notification && <Notification message={notification} onClose={() => setNotification("")} />}
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-					<div className="flex flex-col space-y-2">
-						<label htmlFor="nomenclature" className="font-semibold">Nomenclature</label>
-						<input
-						type="text"
-						id="nomenclature"
-						value={userInput}
-						onChange={handleInputChange}
-						placeholder="Entrez la nomenclature"
-						className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
-						/>
-					</div>
-					<div className="flex flex-col space-y-2">
-						<button
-						className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-						onClick={handleButtonClick}
-						>
-						Rechercher
-						</button>
-						</div>
-						<div className="flex flex-col space-y-2">
-						<label htmlFor="libelle" className="font-semibold">Libellé</label>
-						<h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md">{libelleData?.libelle || 'N/A'}</h3>
-						</div>
-						<div className="flex items-center space-x-2">
+	}
+  
+	 
+  
+	return (
+  
+									  
+							  
+	  <div className="flex justify-center items-center h-full py-6">
+		  <div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
+		  {notification && <Notification message={notification} onClose={() => setNotification("")} />}
+		  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+				<div className="flex flex-col space-y-2">
+					<label htmlFor="nomenclature" className="font-semibold">Nomenclature</label>
+					<input
+					type="text"
+					id="nomenclature"
+					value={userInput}
+					onChange={handleInputChange}
+					placeholder="Entrez la nomenclature"
+					className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+					/>
+				</div>
+				<div className="flex flex-col space-y-2">
+					<button
+					className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+					onClick={handleButtonClick}
+					>
+					Rechercher
+					</button>
+				</div>
+				<div className="flex flex-col space-y-2">
+					<label htmlFor="libelle" className="font-semibold">Libellé</label>
+					<h3 className="text-red-500 font-bold border border-gray-300 p-2 rounded-md text-sm">{libelleData?.libelle || 'N/A'}</h3>
+				</div>
+
+				<div className="flex flex-col space-y-2">
+					<div className="flex items-center space-x-2">
 						{statut === "OK" ? (
 						<div className="flex items-center space-x-2">
 							<input
@@ -283,7 +300,18 @@ function UemoaForm() {
 							<p></p>
 						)}
 					</div>
+				</div>
+				<button
+				className="mt-8 md:mt-8 w-60 bg-blue-500
+				 text-white rounded-md py-2 px-4
+				 hover:bg-blue-600 focus:outline-none
+				 focus:bg-blue-600"
+					onClick={handleButtonClicktaux}
+				>
+					Calculer
+				</button>
 			</div>
+
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="tauxCumule" className="font-semibold text-center">Taux cumulé</label>
@@ -293,63 +321,88 @@ function UemoaForm() {
   
   
   
-				<form onSubmit={handleSimulateSubmit}>
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
-						<div className="flex flex-col space-y-2">
-							<label htmlFor="simulateValue" className="font-semibold">Simuler une valeur</label>
-							<input
-								id="simulateValue"
-								type="text"
-								placeholder="Entrez une valeur"
-								value={simulateValue || ''}
-								onChange={handleInputSimulateChange}
-								className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
-							/>
-						</div>
-						<div className="flex flex-col space-y-2">
-							<button
-								type="submit"
-								className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-							>
-								Calculer les droits
-							</button>
-						</div>
+			<form onSubmit={handleSimulateSubmit}>
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
+					<div className="flex flex-col space-y-2">
+						<label htmlFor="simulateValue" className="font-semibold">Simuler une valeur</label>
+						<input
+							id="simulateValue"
+							type="text"
+							placeholder="Entrez une valeur"
+							value={simulateValue || ''}
+							onChange={handleInputSimulateChange}
+							className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-400"
+						/>
 					</div>
-				</form>
-				<div className="overflow-x-auto py-5">
-					<Table className="table-auto w-full border-collapse border border-gray-200">
-						<thead className="bg-gray-200">
-							<tr>
-								<th className="px-4 py-2 border border-gray-200">Droit Taxe</th>
-								<th className="px-4 py-2 border border-gray-200">Taux lineaire</th>
-								<th className="px-4 py-2 border border-gray-200">Taux Cumulé</th>
-								<th className="px-4 py-2 border border-gray-200">Montant droit de taxe</th>
-							</tr>
-						</thead>
-						<tbody>
-							{[
-								{ label: 'PC', values: [pc,tauxpc, calculatedValuetauxpc] },
-								{ label: 'PCS', values: [pcs, tauxpcs, calculatedValuetauxpcs] },
-								{ label: 'RS', values: [rs, tauxrs, calculatedValuetauxrs] },
-								{ label: 'RAU', values: [rau, tauxrau, calculatedValuetauxrau] },
-								{ label: 'PS', values: [ps, tauxps, calculatedValuetauxps] },
-								{ label: 'ECT', values: [ect, tauxect, calculatedValuetauxect] },
-								{ label: 'DD', values: [dd, tauxdd, calculatedValuetauxdd] },
-								{ label: 'DA', values: [da, tauxda, calculatedValuetauxda] },
-								{ label: 'AIB', values: [aib, tauxaib, calculatedValuetauxaib] },
-								{ label: 'TVA', values: [tva, tauxtva, calculatedValuetauxtva] },
-							].map(({ label, values }, index) => (
-								<tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-									<td className="px-4 py-2 border border-gray-200">{label}</td>
-									<td className="px-4 py-2 border border-gray-200">{values[0] !== undefined ? values[0] : 'N/A'}</td>
-									<td className="px-4 py-2 border border-gray-200">{values[1] !== undefined ? values[1] : 'N/A'}</td>
-									<td className="px-4 py-2 border border-gray-200 text-blue-500 font-bold">{values[2] !== undefined ? values[2] : 'N/A'}</td>
-								</tr>
-							))}
-						</tbody>
-					</Table>
+					<div className="flex flex-col space-y-2">
+						<label htmlFor="simulateValue" className="font-semibold text-center">Devise étrangère</label>
+						<select
+							id="currency"
+							value={selectedCurrency}
+							onChange={handleCurrencyChange}
+							className="text-black-400 font-bold text-center border border-gray-300 rounded-md p-2"						>
+							<option value="XOF">FCFA</option>
+							<option value="EUR">EURO</option>
+							<option value="USD">Dollar us</option>
+							<option value="GBP">Livre sterling</option>
+							<option value="JPY">Yen japonais</option>
+							<option value="CHF">Franc suisse</option>
+							<option value="CAD">Dollar canadien</option>
+							<option value="CNY">Yuan chinois</option>
+							<option value="INR">Roupie Indienne</option>
+							<option value="DTS">DTS du FMI</option>
+							<option value="NGN">Naira</option>
+							<option value="GHS">Cedi ghaneen</option>
+							<option value="GMD">Dalasi gambien</option>
+							<option value="GNF">Franc guineen</option>
+							<option value="PHP">Peso Philippin</option>
+							{/* Ajoutez d'autres devises selon vos besoins */}
+						</select>
+					</div>
+					<div className="flex flex-col space-y-2">
+						<button
+							type="submit"
+							className="mt-8 md:mt-8 w-full bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+						>
+							Calculer les droits
+						</button>
+					</div>
 				</div>
-	
+			</form>
+			<div className="overflow-x-auto py-5">
+				  <Table className="table-auto w-full border-collapse border border-gray-200">
+					  <thead className="bg-gray-200">
+						  <tr>
+							  <th className="px-4 py-2 border border-gray-200">Droit Taxe</th>
+							  <th className="px-4 py-2 border border-gray-200">Taux lineaire</th>
+							  <th className="px-4 py-2 border border-gray-200">Taux Cumulé</th>
+							  <th className="px-4 py-2 border border-gray-200">Montant droit de taxe</th>
+						  </tr>
+					  </thead>
+					  <tbody>
+						  {[
+							  { label: 'PC', values: [pc,tauxpc, calculatedValuetauxpc] },
+							  { label: 'PCS', values: [pcs, tauxpcs, calculatedValuetauxpcs] },
+							  { label: 'RS', values: [rs, tauxrs, calculatedValuetauxrs] },
+							  { label: 'RAU', values: [rau, tauxrau, calculatedValuetauxrau] },
+							  { label: 'PS', values: [ps, tauxps, calculatedValuetauxps] },
+							  { label: 'ECT', values: [ect, tauxect, calculatedValuetauxect] },
+							  { label: 'DD', values: [dd, tauxdd, calculatedValuetauxdd] },
+							  { label: 'DA', values: [da, tauxda, calculatedValuetauxda] },
+							  { label: 'AIB', values: [aib, tauxaib, calculatedValuetauxaib] },
+							  { label: 'TVA', values: [tva, tauxtva, calculatedValuetauxtva] },
+						  ].map(({ label, values }, index) => (
+							  <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+								  <td className="px-4 py-2 border border-gray-200">{label}</td>
+								  <td className="px-4 py-2 border border-gray-200">{values[0] !== undefined ? values[0] : 'N/A'}</td>
+								  <td className="px-4 py-2 border border-gray-200">{values[1] !== undefined ? values[1] : 'N/A'}</td>
+								  <td className="px-4 py-2 border border-gray-200 text-blue-500 font-bold">{values[2] !== undefined ? values[2] : 'N/A'}</td>
+							  </tr>
+						  ))}
+					  </tbody>
+				  </Table>
+			  </div>
+  
 			<div className="grid grid-cols-1 gap-2 px-2 py-2 items-start">
 				<div className="flex flex-col space-y-2 border-4 border-blue-500 p-2 rounded-md w-full">
 					<label htmlFor="totalTaux" className="font-semibold text-center">Montant</label>

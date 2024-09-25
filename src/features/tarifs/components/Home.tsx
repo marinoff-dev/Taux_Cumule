@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Avatar } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,9 +10,9 @@ import { useGetTauxByNomenclatureQuery } from "@/services/index";
 
 
 const Home: React.FC = () => {
-  const [value, setValue] = useState<number | undefined>(undefined);
-  const [userInput, setUserInput] = useState<string>("");
-  const [counter, setCounter] = useState<number>(0);
+const [value, setValue] = useState<number | undefined>(undefined);
+const [userInput, setUserInput] = useState<string>("");
+const [counter, setCounter] = useState<number>(0);
 
 
  
@@ -38,7 +39,9 @@ const Home: React.FC = () => {
               </Avatar>
               <div className="grid gap-1">
                 <p className="text-lg font-medium">Nombre de personnes enregistrés</p>
-                <p className="text-sm text-muted-foreground text-blue-500 font-bold">01</p>
+                <p className="text-sm text-muted-foreground text-blue-500 font-bold">
+                {/* {counter !== undefined ? counter: 'N/A'} */} 01
+                </p>
               </div>
             </div>
           </CardContent>
@@ -63,7 +66,10 @@ const Home: React.FC = () => {
               </Avatar>
               <div className="grid gap-1">
                 <p className="text-lg font-medium">Nombre de Positions</p>
-                <p className="text-sm text-muted-foreground text-blue-500 font-bold">00</p>
+                <p className="text-sm text-muted-foreground text-blue-500 font-bold">
+                  {/* Nbre de position */}
+                {/* {counter !== undefined ? counter: 'N/A'}  */}00
+                </p>
               </div>
             </div>
           </CardContent>
