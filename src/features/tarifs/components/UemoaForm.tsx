@@ -9,6 +9,7 @@ import {
 	Table,
   
 } from "@/components/ui/table"
+import TarifSearch from "./TarifSearch";
 
 function UemoaForm() {
 	const [value, setValue] = useState<number | undefined>(undefined);
@@ -26,7 +27,8 @@ function UemoaForm() {
 	const [tauxaib, setTauxaib] = useState<number>(0);
   
    //recupere le montant demander a calutuler et des taux
-	const [simulateValue, setSimulateValue] = useState<number | undefined>(undefined);
+   const [simulateValue, setSimulateValue] = useState<string>('');
+   //   const [simulateValue, setSimulateValue] = useState<number | undefined>(undefined);
 	const [calculatedValue, setCalculatedValue] = useState<number | undefined>(undefined);
 	const [calculatedValuetauxrs, setCalculatedValuetauxrs] = useState<number | undefined>(undefined);
 	const [calculatedValuetauxps, setCalculatedValuetauxps] = useState<number | undefined>(undefined);
@@ -94,7 +96,7 @@ function UemoaForm() {
 	  if (tauxData) {
 		console.log("le taux récupéré sdcdcg:", tauxData);
 		setTauxda(tauxData.tauxda);
-		setTaux(tauxData.taux);
+		//setTaux(tauxData.taux);
 		setTauxaib(tauxData.tauxaib)
 		setTauxtva(tauxData.tauxtva)
 		setTauxrs(tauxData.tauxrs)
@@ -158,13 +160,13 @@ function UemoaForm() {
 		setNotification("Nomenclature invalide! Veuillez entrer un nombre de 10 chiffres.");
 		setValue(undefined);
 		setTimeout(() => setNotification(""), 5000); // Auto close after 3 seconds
-	  } else {
+	  	} else {
 		setValue(+userInput);
-  
-	  }
-  
-	  //const libelle = await fetch("http://localhost:8080/api/tariflibelle/"+userInput).then(res=>res.json()).catch(error=>console.log("lerreru est ", error.message))
-  
+  		const libelle = await fetch("http://localhost:8080/api/tariflibelle/" + userInput)
+			.then((res) => res.json())
+			.catch((error) => console.log("l'erreur est ", error.message));
+		}
+	  
 	 // console.log("le libelle est : ", libelle);
 	  
   
@@ -197,36 +199,139 @@ function UemoaForm() {
 	  }
   
 	//metre a jour la valeur entrer dans le input pour calculer le montabt 
-	function handleInputSimulateChange(event: React.ChangeEvent<HTMLInputElement>) {
-	  setSimulateValue(parseFloat(event.target.value.trim()));
-	}
+	// function handleInputSimulateChange(event: React.ChangeEvent<HTMLInputElement>) {
+	//   setSimulateValue(parseFloat(event.target.value.trim()));
+	// }
+
+	const handleInputSimulateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSimulateValue(event.target.value);
+	  };
   
   
 	function handleSimulateSubmit(event: React.FormEvent<HTMLFormElement>) {
 	  event.preventDefault();
-	  const calculatedValue = simulateValue !== undefined ? Number(((simulateValue * taux)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxrs = simulateValue !== undefined ? Number(((simulateValue * tauxrs)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxps = simulateValue !== undefined ? Number(((simulateValue * tauxps)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxpc = simulateValue !== undefined ? Number(((simulateValue * tauxpc)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxpcs = simulateValue !== undefined ? Number(((simulateValue * tauxpcs)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxrau = simulateValue !== undefined ? Number(((simulateValue * tauxrau)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxect = simulateValue !== undefined ? Number(((simulateValue * tauxect)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxdd = simulateValue !== undefined ? Number(((simulateValue * tauxdd)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxda = simulateValue !== undefined ? Number(((simulateValue * tauxda)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxaib = simulateValue !== undefined ? Number(((simulateValue * tauxaib)/100).toFixed(2)) : undefined;
-	  const calculatedValuetauxtva = simulateValue !== undefined ? Number(((simulateValue * tauxtva)/100).toFixed(2)) : undefined;
-	  setCalculatedValue(calculatedValue);
-	  setCalculatedValuetauxrs(calculatedValuetauxrs);
-	  setCalculatedValuetauxpc(calculatedValuetauxpc);
-	  setCalculatedValuetauxps(calculatedValuetauxps);
-	  setCalculatedValuetauxpcs(calculatedValuetauxpcs);
-	  setCalculatedValuetauxrau(calculatedValuetauxrau);
-	  setCalculatedValuetauxect(calculatedValuetauxect);
-	  setCalculatedValuetauxdd(calculatedValuetauxdd);
-	  setCalculatedValuetauxda(calculatedValuetauxda);
-	  setCalculatedValuetauxaib(calculatedValuetauxaib);
-	  setCalculatedValuetauxtva(calculatedValuetauxtva);
-	
+
+	  // Taux de change par rapport à USD
+			const exchangeRates: {
+				[key: string]: number;
+			} = {
+				XOF: 1, // Exemple de taux de change
+				EUR: 655.957,  // Exemple de taux de change
+				USD: 606.690 ,   // Exemple de taux de change
+				JPY: 650,// Exemple de taux de change
+				CHF: 1, // Exemple de taux de change
+				CAD: 600,   // Exemple de taux de change
+				CNY: 650 ,
+				INR: 1, // Exemple de taux de change
+				DTS: 600,   // Exemple de taux de change
+				NGN: 650,
+				GHS: 1, // Exemple de taux de change
+				GMD: 600,   // Exemple de taux de change
+				GNF: 650,//exemple de taux de change 
+				PHP: 1 // Exemple de taux de change  
+			};
+			
+ 
+		// Vérifier si simulateValue est défini
+		
+		
+
+		const simulateValueAsString: string = simulateValue.toString(); // Convertir simulateValue en une chaîne de caractères
+		
+		const simulateValueNumber: number = parseFloat(simulateValue);
+			
+		
+		if (isNaN(simulateValueNumber)) {
+			console.error('La valeur saisie n\'est pas un nombre valide.');
+			return;
+		}
+			
+		// Convertir le montant saisi dans la devise sélectionnée
+		const exchangeRate = exchangeRates[selectedCurrency];
+		const amountInSelectedCurrency = simulateValueNumber ;
+		console.log("Valeur du simulateValue est  :", simulateValue);
+		console.log("Valeur du exchangeRate est  :", exchangeRate);
+
+
+		console.log("Valeur du amountInSelectedCurrency est  :", amountInSelectedCurrency);
+
+		// Calcul des droits et taxes en fonction de la devise sélectionnée
+		let calculatedValue1;
+
+		switch (selectedCurrency) {
+			case 'XOF':
+				calculatedValue1 = amountInSelectedCurrency * 1; // Exemple de calcul pour XOF
+				break;
+			case 'EUR':
+				calculatedValue1 = amountInSelectedCurrency * 655.957; // Exemple de calcul pour Euro
+				break;
+			case 'USD':
+				calculatedValue1 = amountInSelectedCurrency * 606.690; // Exemple de calcul pour Dollar us
+				break;
+			case 'GBP':
+				calculatedValue1 = amountInSelectedCurrency * 766.660; // Exemple de calcul pour livre steling
+				break;
+			case 'JPY':
+				calculatedValue1 = amountInSelectedCurrency * 3.890; // Exemple de calcul pour Yen japonais
+				break;
+			case 'CHF':
+					calculatedValue1 = amountInSelectedCurrency * 667.300 ; // Exemple de calcul pour Franc suisse
+					break;
+			case 'CAD':
+					calculatedValue1 = amountInSelectedCurrency * 443.810 ; // Exemple de calcul pour Dollar candien
+					break;
+			case 'CNY':
+					calculatedValue1 = amountInSelectedCurrency * 83.880 ; // Exemple de calcul pour Yuan chinois
+					break;
+			case 'INR':
+					calculatedValue1 = amountInSelectedCurrency * 7.280 ; // Exemple de calcul pour Roupie Indienne
+					break;
+			case 'DTS':
+					calculatedValue1 = amountInSelectedCurrency * 802.500 ; // Exemple de calcul pour DTS du FMI
+					break;
+			case 'NGN':
+					calculatedValue1 = amountInSelectedCurrency * 0.430 ; // Exemple de calcul pour Naira
+					break;
+			case 'GHS':
+					calculatedValue1 = amountInSelectedCurrency * 44.280 ; // Exemple de calcul pour Cedi ghannen
+					break;
+
+			case 'GMD':
+					calculatedValue1 = amountInSelectedCurrency * 9.010 ; // Exemple de calcul pour Dalasi gambien
+					break;
+			case 'GNF':
+					calculatedValue1 = amountInSelectedCurrency * 7.140 ; // Exemple de calcul pour Franc guineen
+					break;
+			case 'PHP':
+					calculatedValue1 = amountInSelectedCurrency * 10.38 ; // Exemple de calcul pour Peso Philippin
+					break;
+			// Ajoutez des cas pour d'autres devises si nécessaire
+			default:
+				calculatedValue1 = 0;
+		}
+		const calculatedValue = calculatedValue1 !== undefined ? Number(((calculatedValue1 * taux)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxrs = simulateValue !== undefined ? Number(((calculatedValue1 * tauxrs)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxps = simulateValue !== undefined ? Number(((calculatedValue1 * tauxps)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxpc = simulateValue !== undefined ? Number(((calculatedValue1 * tauxpc)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxpcs = simulateValue !== undefined ? Number(((calculatedValue1 * tauxpcs)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxrau = simulateValue !== undefined ? Number(((calculatedValue1 * tauxrau)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxect = simulateValue !== undefined ? Number(((calculatedValue1 * tauxect)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxdd = simulateValue !== undefined ? Number(((calculatedValue1 * tauxdd)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxda = simulateValue !== undefined ? Number(((calculatedValue1 * tauxda)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxaib = simulateValue !== undefined ? Number(((calculatedValue1 * tauxaib)/100).toFixed(2)) : undefined;
+		const calculatedValuetauxtva = simulateValue !== undefined ? Number(((calculatedValue1 * tauxtva)/100).toFixed(2)) : undefined;
+		setCalculatedValue(calculatedValue);
+		setCalculatedValuetauxrs(calculatedValuetauxrs);
+		setCalculatedValuetauxpc(calculatedValuetauxpc);
+		setCalculatedValuetauxps(calculatedValuetauxps);
+		setCalculatedValuetauxpcs(calculatedValuetauxpcs);
+		setCalculatedValuetauxrau(calculatedValuetauxrau);
+		setCalculatedValuetauxect(calculatedValuetauxect);
+		setCalculatedValuetauxdd(calculatedValuetauxdd);
+		setCalculatedValuetauxda(calculatedValuetauxda);
+		setCalculatedValuetauxaib(calculatedValuetauxaib);
+		setCalculatedValuetauxtva(calculatedValuetauxtva);
+		
 	  // Faites quelque chose avec les valeurs calculées, par exemple les afficher dans la console
 	  console.log("Valeur calculée taux :", calculatedValue);
 	  console.log("Valeur calculée tauxrs :", calculatedValuetauxrs);
@@ -421,4 +526,4 @@ function UemoaForm() {
   }
   
 
-export default UemoaForm;
+export default TarifSearch;
