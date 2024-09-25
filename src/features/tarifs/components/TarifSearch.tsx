@@ -10,6 +10,7 @@ import {
 	Table,
   
 } from "@/components/ui/table"
+
 function TarifSearch() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
@@ -384,9 +385,7 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
    
 
   return (
-
-									
-							
+						
 	<div className="flex justify-center items-center h-full py-6">
 		<div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
 		{notification && <Notification message={notification} onClose={() => setNotification("")} />}
