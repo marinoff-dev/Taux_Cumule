@@ -65,7 +65,12 @@ function UemoaForm() {
 	const { data: tauxLineaireData } = useGetTauxLineaireByNomenclatureQuery(value !== undefined ? value : 0);
 	const [isChecked, setIsChecked] = useState(false);
  
-
+	// initialisé l'etat qui stock la devise 
+	const [selectedCurrency, setSelectedCurrency] = useState<string>('XOF');
+	
+	const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		setSelectedCurrency(event.target.value);
+	}
 	//console.log(useGetTarifswByNomenclatureQuery(value !== undefined ? value : 11111123))
   
 	const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -331,7 +336,28 @@ function UemoaForm() {
 					</div>
 					<div className="flex flex-col space-y-2">
 						<label htmlFor="simulateValue" className="font-semibold text-center">Devise étrangère</label>
-						<h3 className="text-black-400 font-bold text-center">XOF</h3>
+						<select
+							id="currency"
+							value={selectedCurrency}
+							onChange={handleCurrencyChange}
+							className="text-black-400 font-bold text-center border border-gray-300 rounded-md p-2"						>
+							<option value="XOF">FCFA</option>
+							<option value="EUR">EURO</option>
+							<option value="USD">Dollar us</option>
+							<option value="GBP">Livre sterling</option>
+							<option value="JPY">Yen japonais</option>
+							<option value="CHF">Franc suisse</option>
+							<option value="CAD">Dollar canadien</option>
+							<option value="CNY">Yuan chinois</option>
+							<option value="INR">Roupie Indienne</option>
+							<option value="DTS">DTS du FMI</option>
+							<option value="NGN">Naira</option>
+							<option value="GHS">Cedi ghaneen</option>
+							<option value="GMD">Dalasi gambien</option>
+							<option value="GNF">Franc guineen</option>
+							<option value="PHP">Peso Philippin</option>
+							{/* Ajoutez d'autres devises selon vos besoins */}
+						</select>
 					</div>
 					<div className="flex flex-col space-y-2">
 						<button

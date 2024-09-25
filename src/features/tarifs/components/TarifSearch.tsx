@@ -225,7 +225,7 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     } else {
         console.log('Le checkbox n\'est pas coché');
     }
-}*/
+	}*/
 
   //metre a jour la valeur entrer dans le input pour calculer le montant 
  

@@ -4,22 +4,22 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 interface DataItem {
   name: string;
-  ventes: number;
+  vistes: number;
 }
 
 const data: DataItem[] = [
-  { name: 'Jan', ventes: 30 },
-  { name: 'Feb', ventes: 20 },
-  { name: 'Mar', ventes: 50 },
-  { name: 'Avril', ventes: 40 },
-  { name: 'Mai', ventes: 60 },
-  { name: 'Juin', ventes: 30 },
-  { name: 'Juil', ventes: 20 },
-  { name: 'Aout', ventes: 50 },
-  { name: 'Sept', ventes: 40 },
-  { name: 'Oct', ventes: 60 },
-  { name: 'Nov', ventes: 40 },
-  { name: 'Dec', ventes: 60 },
+  { name: 'Jan', vistes: 30 },
+  { name: 'Feb', vistes: 20 },
+  { name: 'Mar', vistes: 50 },
+  { name: 'Avril', vistes: 40 },
+  { name: 'Mai', vistes: 60 },
+  { name: 'Juin', vistes: 30 },
+  { name: 'Juil', vistes: 20 },
+  { name: 'Aout', vistes: 50 },
+  { name: 'Sept', vistes: 40 },
+  { name: 'Oct', vistes: 60 },
+  { name: 'Nov', vistes: 40 },
+  { name: 'Dec', vistes: 60 },
   
 ];
 
@@ -32,7 +32,7 @@ const MyBarChart: React.FC = () => {
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="ventes" fill="#2c94f5"/>
+        <Bar dataKey="vistes" fill="#2c94f5"/>
       </BarChart>
     </div>
   );
