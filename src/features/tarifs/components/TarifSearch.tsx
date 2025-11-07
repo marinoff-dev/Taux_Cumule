@@ -1,3 +1,5 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState , useEffect, ChangeEvent } from "react";
 import { useGetTarifswByNomenclatureQuery , useGetTauxByNomenclatureQuery, useGetTauxLineaireByNomenclatureQuery } from "@/services/index";
 import "./SearchBar.css";
@@ -8,6 +10,7 @@ import {
 	Table,
   
 } from "@/components/ui/table"
+
 function TarifSearch() {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [userInput, setUserInput] = useState<string>("");
@@ -223,7 +226,7 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     } else {
         console.log('Le checkbox n\'est pas coché');
     }
-}*/
+	}*/
 
   //metre a jour la valeur entrer dans le input pour calculer le montant 
  
@@ -240,8 +243,8 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 					[key: string]: number;
 				} = {
 					XOF: 1, // Exemple de taux de change
-					EUR: 1, // Exemple de taux de change
-					USD: 600,   // Exemple de taux de change
+					EUR: 655.957,  // Exemple de taux de change
+					USD: 606.690 ,   // Exemple de taux de change
 					JPY: 650,// Exemple de taux de change
 					CHF: 1, // Exemple de taux de change
 					CAD: 600,   // Exemple de taux de change
@@ -288,47 +291,47 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 					calculatedValue1 = amountInSelectedCurrency * 1; // Exemple de calcul pour XOF
 					break;
 				case 'EUR':
-					calculatedValue1 = amountInSelectedCurrency * 655,957; // Exemple de calcul pour XOF
+					calculatedValue1 = amountInSelectedCurrency * 655.957; // Exemple de calcul pour Euro
 					break;
 				case 'USD':
-					calculatedValue1 = amountInSelectedCurrency * 606,690; // Exemple de calcul pour USD
+					calculatedValue1 = amountInSelectedCurrency * 606.690; // Exemple de calcul pour Dollar us
 					break;
 				case 'GBP':
-					calculatedValue1 = amountInSelectedCurrency * 766,660; // Exemple de calcul pour EUR
+					calculatedValue1 = amountInSelectedCurrency * 766.660; // Exemple de calcul pour livre steling
 					break;
 				case 'JPY':
-					calculatedValue1 = amountInSelectedCurrency * 3,890; // Exemple de calcul pour EUR
+					calculatedValue1 = amountInSelectedCurrency * 3.890; // Exemple de calcul pour Yen japonais
 					break;
 				case 'CHF':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 667.300 ; // Exemple de calcul pour Franc suisse
 						break;
 				case 'CAD':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 443.810 ; // Exemple de calcul pour Dollar candien
 						break;
 				case 'CNY':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 83.880 ; // Exemple de calcul pour Yuan chinois
 						break;
 				case 'INR':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 7.280 ; // Exemple de calcul pour Roupie Indienne
 						break;
 				case 'DTS':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 802.500 ; // Exemple de calcul pour DTS du FMI
 						break;
 				case 'NGN':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 0.430 ; // Exemple de calcul pour Naira
 						break;
 				case 'GHS':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 44.280 ; // Exemple de calcul pour Cedi ghannen
 						break;
 
 				case 'GMD':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 9.010 ; // Exemple de calcul pour Dalasi gambien
 						break;
 				case 'GNF':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 7.140 ; // Exemple de calcul pour Franc guineen
 						break;
 				case 'PHP':
-						calculatedValue1 = amountInSelectedCurrency * 650; // Exemple de calcul pour EUR
+						calculatedValue1 = amountInSelectedCurrency * 10.38 ; // Exemple de calcul pour Peso Philippin
 						break;
 				// Ajoutez des cas pour d'autres devises si nécessaire
 				default:
@@ -382,9 +385,7 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
    
 
   return (
-
-									
-							
+						
 	<div className="flex justify-center items-center h-full py-6">
 		<div className="w-full md:w-[90%] lg:w-[75%] bg-white rounded-lg shadow-lg p-6">
 		{notification && <Notification message={notification} onClose={() => setNotification("")} />}
@@ -450,9 +451,8 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 					<h3 className="text-red-500 font-bold text-center">{taux !== undefined ? taux.toFixed(2) : 'N/A'} %</h3>
 				</div>
 			</div>
-
-
-
+			
+			
 			<form onSubmit={handleSimulateSubmit}>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 py-4 items-start">
 					<div className="flex flex-col space-y-2">
@@ -542,6 +542,7 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 					<h3 className="text-red-500 font-bold text-center">{calculatedValue !== undefined ? calculatedValue.toString() : 'N/A'} <span className="text-black text-xs">FCFA</span></h3>
 				</div>
 			</div>
+			
 
 		</div>
 		
