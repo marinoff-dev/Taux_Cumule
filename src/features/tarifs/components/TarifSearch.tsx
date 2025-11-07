@@ -337,16 +337,16 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 
 
 	const calculatedValue = calculatedValue1 !== undefined ? Number(((calculatedValue1 * taux)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxrs = simulateValue !== undefined ? Number(((calculatedValue1 * tauxrs)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxps = simulateValue !== undefined ? Number(((calculatedValue1 * tauxps)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxpc = simulateValue !== undefined ? Number(((calculatedValue1 * tauxpc)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxpcs = simulateValue !== undefined ? Number(((calculatedValue1 * tauxpcs)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxrau = simulateValue !== undefined ? Number(((calculatedValue1 * tauxrau)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxect = simulateValue !== undefined ? Number(((calculatedValue1 * tauxect)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxdd = simulateValue !== undefined ? Number(((calculatedValue1 * tauxdd)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxda = simulateValue !== undefined ? Number(((calculatedValue1 * tauxda)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxaib = simulateValue !== undefined ? Number(((calculatedValue1 * tauxaib)/100).toFixed(2)) : undefined;
-	const calculatedValuetauxtva = simulateValue !== undefined ? Number(((calculatedValue1 * tauxtva)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxrs = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxrs)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxps = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxps)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxpc = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxpc)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxpcs = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxpcs)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxrau = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxrau)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxect = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxect)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxdd = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxdd)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxda = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxda)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxaib = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxaib)/100).toFixed(2)) : undefined;
+	const calculatedValuetauxtva = calculatedValue1 !== undefined ? Number(((calculatedValue1 * tauxtva)/100).toFixed(2)) : undefined;
 	setCalculatedValue(calculatedValue);
 	setCalculatedValuetauxrs(calculatedValuetauxrs);
 	setCalculatedValuetauxpc(calculatedValuetauxpc);
@@ -523,7 +523,7 @@ const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 							{ label: 'DD', values: [dd, tauxdd, calculatedValuetauxdd] },
 							{ label: 'DA', values: [da, tauxda, calculatedValuetauxda] },
 							{ label: 'AIB', values: [aib, tauxaib, calculatedValuetauxaib] },
-							{ label: 'TVA', values: [tva, tauxtva.toFixed(2), calculatedValuetauxtva] },
+							{ label: 'TVA', values: [tva, tauxtva, calculatedValuetauxtva] },
 						].map(({ label, values }, index) => (
 							<tr key={index} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
 								<td className="px-4 py-2 border border-gray-200">{label}</td>
